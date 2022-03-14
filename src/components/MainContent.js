@@ -133,23 +133,26 @@ class MainContent extends React.Component {
                 console.log('catch stMaps forEach:', e);
             }
 
-            // this.setState({ fetching_state: [50, 'Verificando contribuições'] })
-            // for (const point of stDivergencePoints) {
-            //     try {
-            //         let has_contributed = await strateegiaHasContribution({ token: token, content_id: point.id });
-            //         if (has_contributed.has_contributed === true) {
-            //             try {
-            //                 let divergence_content = await strateegiaContents({ token: token, content_id: point.id });
-            //                 stDivergenceContents.push(divergence_content);
-            //             } catch (e) {
-            //                 console.log('catch strateegiaContents:', e);
-            //             }
-            //         }
-            //     }
-            //     catch (e) {
-            //         console.log('catch strateegiaHasContribution:', e);
-            //     }
-            // }
+            this.setState({ fetching_state: [50, 'Verificando contribuições'] })
+            for (const point of stDivergencePoints) {
+                // console.log(point)
+                try {
+                    let has_contributed = await strateegiaHasContribution({ token: token, content_id: point.id });
+                    // console.log(has_contributed)
+                    if (has_contributed.has_contributed === true) {
+                        try {
+                            let divergence_content = await strateegiaContents({ token: token, content_id: point.id });
+                            console.log(divergence_content)
+                            stDivergenceContents.push(divergence_content);
+                        } catch (e) {
+                            console.log('catch strateegiaContents:', e);
+                        }
+                    }
+                }
+                catch (e) {
+                    console.log('catch strateegiaHasContribution:', e);
+                }
+            }
 
             try {
                 stDivergenceContents.forEach(function (content) {

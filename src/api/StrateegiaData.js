@@ -59,7 +59,7 @@ export const strateegiaParentComments = async ({ token, content_id, question_id 
 
     var myHeaders = new Headers();
 
-    const url = 'https://api.strateegia.digital:443/projects/v1/content/' + content_id + '/question/' + question_id + '/comment'
+    const url = 'https://api.strateegia.digital/projects/v1/content/' + content_id + '/question/' + question_id + '/comment'
 
     myHeaders.set('Authorization', 'Bearer ' + token);
     myHeaders.append('Content-Type', 'application/json')
@@ -85,7 +85,7 @@ export const strateegiaHasContribution = async ({ token, content_id }) => {
 
     var myHeaders = new Headers();
 
-    const url = 'https://api.strateegia.digital:443/projects/v1/content/' + content_id + '/comment/contribution'
+    const url = 'https://api.strateegia.digital/projects/v1/divergence-point/' + content_id + '/comment/contribution'
 
     myHeaders.set('Authorization', 'Bearer ' + token);
     myHeaders.append('Content-Type', 'application/json')
@@ -137,7 +137,7 @@ export const strateegiaContents = async ({ token, content_id }) => {
 
     var myHeaders = new Headers();
 
-    const url = 'https://api.strateegia.digital:443/projects/v1/content/' + content_id
+    const url = 'https://api.strateegia.digital:443/projects/v1/divergence-point/' + content_id
 
     myHeaders.set('Authorization', 'Bearer ' + token);
     myHeaders.append('Content-Type', 'application/json')
@@ -246,28 +246,3 @@ export const strateegiaMaps = async ({ token, mission_id }) => {
   });
     return data;
 }
-// export const strateegiaMaps = async ({ token, mission_id }) => {
-//   return new Promise((resolve, reject) => {
-
-//     var myHeaders = new Headers();
-
-//     const url = 'https://api.strateegia.digital/projects/v1/map/' + mission_id
-
-//     myHeaders.set('Authorization', 'Bearer ' + token);
-//     myHeaders.append('Content-Type', 'application/json')
-
-//     fetch(url, {
-//       method: 'GET',
-//       headers: myHeaders,
-//     })
-//       .then((response) => {
-//         if (response.ok) {
-//           console.log('mapa capturado com sucesso')
-//           resolve(response.json());
-//         } else {
-//           console.log('mapa NÃO capturado:', response)
-//           reject();
-//         }
-//       });
-//   });
-// };
