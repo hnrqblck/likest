@@ -63,7 +63,7 @@ class Home extends React.Component {
     }
 
     handleMentorshipUpdate(has_mentorship) {
-
+        // console.log(has_mentorship)
         this.setState({ has_mentorship: has_mentorship },
             // function () {
             //     this.props.handleTabIndexUpdate(this.state.tabIndex)
@@ -72,7 +72,6 @@ class Home extends React.Component {
     }
 
     handleCertLevelUpdate(cert_level) {
-
         this.setState({ cert_level: cert_level },
             // function () {
             //     console.log('no home! hanglecertlevel', this.state.cert_level)
@@ -98,6 +97,7 @@ class Home extends React.Component {
             });
         this.setState({ tabIndex: 3 })
     }
+    
 
     render() {
 

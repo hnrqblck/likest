@@ -70,9 +70,11 @@ class MainContent extends React.Component {
             try {
                 const projects = await strateegiaProjects({ token: token });
                 projects.forEach(function (lab) {
+                    // console.log(lab)
                     lab.projects.forEach(function (project) {
                         stProjects.push(project);
                     })
+                    // console.log(stProjects[0].id)
                 })
             } catch (e) {
                 console.log('catch strateegiaProjects:', e);
@@ -83,15 +85,14 @@ class MainContent extends React.Component {
 
                 try {
                     let missions = await strateegiaMissions({ token: token, project_id: project.id });
-                    missions.users.forEach(function (user) {
+                    const users = missions.users;
+                    users.forEach(function (user) {
                         if (user.id === UserSession.getId() && user.project_roles.includes('MENTOR')) {
                             userMentorhips.push({ 'project_id': project.id, 'project_title': project.title })
                         }
                     })
-
-                    missions.missions.forEach(function (mission) {
-                        stMissions.push(mission);
-                    })
+                    stMissions.push(missions);
+                    
                 } catch (e) {
                     console.log('catch strateegiaMissions:', e);
                 }
@@ -99,12 +100,14 @@ class MainContent extends React.Component {
 
             this.setState({ fetching_state: [30, 'Carregando Mapas'] })
             for (const mission of stMissions) {
-                try {
-                    let map = await strateegiaMaps({ token: token, mission_id: mission.id });
-                    stMaps.push(map);
-                } catch (e) {
-                    console.log('catch strateegiaMaps:', e);
-                }
+                for (const maps of mission.maps) {
+                    try {
+                        let map = await strateegiaMaps({ token: token, mission_id: maps.id });
+                        stMaps.push(map);
+                    } catch (e) {
+                        console.log('catch strateegiaMaps:', e);
+                    }
+                }                
             }
 
             try {
@@ -130,23 +133,23 @@ class MainContent extends React.Component {
                 console.log('catch stMaps forEach:', e);
             }
 
-            this.setState({ fetching_state: [50, 'Verificando contribuições'] })
-            for (const point of stDivergencePoints) {
-                try {
-                    let has_contributed = await strateegiaHasContribution({ token: token, content_id: point.id });
-                    if (has_contributed.has_contributed === true) {
-                        try {
-                            let divergence_content = await strateegiaContents({ token: token, content_id: point.id });
-                            stDivergenceContents.push(divergence_content);
-                        } catch (e) {
-                            console.log('catch strateegiaContents:', e);
-                        }
-                    }
-                }
-                catch (e) {
-                    console.log('catch strateegiaHasContribution:', e);
-                }
-            }
+            // this.setState({ fetching_state: [50, 'Verificando contribuições'] })
+            // for (const point of stDivergencePoints) {
+            //     try {
+            //         let has_contributed = await strateegiaHasContribution({ token: token, content_id: point.id });
+            //         if (has_contributed.has_contributed === true) {
+            //             try {
+            //                 let divergence_content = await strateegiaContents({ token: token, content_id: point.id });
+            //                 stDivergenceContents.push(divergence_content);
+            //             } catch (e) {
+            //                 console.log('catch strateegiaContents:', e);
+            //             }
+            //         }
+            //     }
+            //     catch (e) {
+            //         console.log('catch strateegiaHasContribution:', e);
+            //     }
+            // }
 
             try {
                 stDivergenceContents.forEach(function (content) {
@@ -192,6 +195,8 @@ class MainContent extends React.Component {
                 }
             }
 
+            
+
 
 
             strateegiaData.push({
@@ -216,25 +221,28 @@ class MainContent extends React.Component {
 
     async getStData(access_token) {
         try {
-            // const strateegiaData = await this.getStraeegiaData({ token: access_token });
+            // console.log(strateegiaParentComments())
+            const strateegiaData = await this.getStraeegiaData({ token: access_token });
+            console.log(strateegiaData)
             this.setState({
                 stData: {
-                    // 'number_of_projects': strateegiaData[0].stProjects.length,
-                    // 'number_of_missions': strateegiaData[0].stMissions.length,
-                    // 'number_of_divergence_points': strateegiaData[0].stDivergencePoints.length,
-                    // 'number_of_convergence_points': strateegiaData[0].stConvergencePoints.length,
-                    // 'number_of_conversation_points': strateegiaData[0].stConversationPoints.length,
+                    'number_of_projects': strateegiaData[0].stProjects.length,
+                    'number_of_missions': strateegiaData[0].stMaps.length,
+                    'number_of_divergence_points': strateegiaData[0].stDivergencePoints.length,
+                    'number_of_convergence_points': strateegiaData[0].stConvergencePoints.length,
+                    'number_of_conversation_points': strateegiaData[0].stConversationPoints.length,
                     // 'number_of_replies_from_user': strateegiaData[0].userStReplies.length,
                     // 'number_of_comment_replies_from_user': strateegiaData[0].userCommentReplies.length,
-                    // 'number_of_mentorships': strateegiaData[0].userMentorhips.length
-                    'number_of_projects': 8,
-                    'number_of_missions': 8,
-                    'number_of_divergence_points': 20,
-                    'number_of_convergence_points': 2,
-                    'number_of_conversation_points': 4,
+                    'number_of_mentorships': strateegiaData[0].userMentorhips.length,
+
+                    // 'number_of_projects': 8,
+                    // 'number_of_missions': 8,
+                    // 'number_of_divergence_points': 20,
+                    // 'number_of_convergence_points': 2,
+                    // 'number_of_conversation_points': 4,
                     'number_of_replies_from_user': 18,
                     'number_of_comment_replies_from_user': 25,
-                    'number_of_mentorships': 2
+                    // 'number_of_mentorships': 2
                 }
             }, function () {
                 this.setState({ fetching_st_data: false },
@@ -283,6 +291,7 @@ class MainContent extends React.Component {
             day: current_date.substring(8, 10)
         }
     }
+
 
     componentDidMount() {
         this.setState({ fetching_st_data: true },

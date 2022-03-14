@@ -4,8 +4,10 @@ export function rankUserStData(st_data) {
     let achieved_levels_participante = []
     let achieved_levels_mentor = []
 
+    // console.log(reference_scores.participante)
     reference_scores.participante.slice().reverse().forEach(
         function (reference_score) {
+            // console.log(st_data.stData.number_of_project)
             if (
                 st_data.stData.number_of_projects >= reference_score.number_of_projects &&
                 st_data.stData.number_of_missions >= reference_score.number_of_missions &&
@@ -19,7 +21,7 @@ export function rankUserStData(st_data) {
             }
         }
     )
-    //console.log('lista participante', achieved_levels_participante)
+    // console.log('lista participante', achieved_levels_participante)
 
     reference_scores.mentor.slice().reverse().forEach(
         function (reference_score) {

@@ -1,11 +1,12 @@
 // import UserSession from "../components/UserSession";
+import api from './api';
 
 export const strateegiaProjects = async ({ token }) => {
   return new Promise((resolve, reject) => {
 
     var myHeaders = new Headers();
 
-    const url = 'https://api.strateegia.digital:443/projects/v1/project'
+    const url = 'https://api.strateegia.digital/projects/v1/project'
 
     myHeaders.set('Authorization', 'Bearer ' + token);
     myHeaders.append('Content-Type', 'application/json')
@@ -15,8 +16,9 @@ export const strateegiaProjects = async ({ token }) => {
       headers: myHeaders,
     })
       .then((response) => {
+        // console.log(response)
         if (response.ok) {
-          // console.log('projects capturados com sucesso')
+          console.log('projects capturados com sucesso')
           resolve(response.json());
         } else {
           console.log('projects NÂO capturados:', response)
@@ -31,7 +33,7 @@ export const strateegiaMissions = async ({ token, project_id }) => {
 
     var myHeaders = new Headers();
 
-    const url = 'https://api.strateegia.digital:443/projects/v1/project/' + project_id
+    const url = 'https://api.strateegia.digital/projects/v1/project/' + project_id
 
     myHeaders.set('Authorization', 'Bearer ' + token);
     myHeaders.append('Content-Type', 'application/json')
@@ -235,27 +237,37 @@ export const strateegiaComments = async ({ token, content_id }) => {
 };
 
 export const strateegiaMaps = async ({ token, mission_id }) => {
-  return new Promise((resolve, reject) => {
 
-    var myHeaders = new Headers();
-
-    const url = 'https://api.strateegia.digital:443/projects/v1/map/' + mission_id
-
-    myHeaders.set('Authorization', 'Bearer ' + token);
-    myHeaders.append('Content-Type', 'application/json')
-
-    fetch(url, {
-      method: 'GET',
-      headers: myHeaders,
-    })
-      .then((response) => {
-        if (response.ok) {
-          console.log('mapa capturado com sucesso')
-          resolve(response.json());
-        } else {
-          console.log('mapa NÃO capturado:', response)
-          reject();
-        }
-      });
+  const { data } = await api(`/projects/v1/map/${mission_id}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
-};
+    return data;
+}
+// export const strateegiaMaps = async ({ token, mission_id }) => {
+//   return new Promise((resolve, reject) => {
+
+//     var myHeaders = new Headers();
+
+//     const url = 'https://api.strateegia.digital/projects/v1/map/' + mission_id
+
+//     myHeaders.set('Authorization', 'Bearer ' + token);
+//     myHeaders.append('Content-Type', 'application/json')
+
+//     fetch(url, {
+//       method: 'GET',
+//       headers: myHeaders,
+//     })
+//       .then((response) => {
+//         if (response.ok) {
+//           console.log('mapa capturado com sucesso')
+//           resolve(response.json());
+//         } else {
+//           console.log('mapa NÃO capturado:', response)
+//           reject();
+//         }
+//       });
+//   });
+// };

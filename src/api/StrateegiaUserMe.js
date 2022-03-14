@@ -14,6 +14,7 @@ export const strateegiaUserMe = async ({ token }) => {
     })
       .then((response) => {
         if (response.ok) {
+          console.log(response)
           resolve(response.json());
         } else {
           reject();
