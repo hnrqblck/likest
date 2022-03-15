@@ -1,17 +1,10 @@
 import React from "react";
-
 import {
     Box
 } from '@chakra-ui/react';
-
 import { rankUserStData } from './Calc'
-
 import ContentTabs from "./ContentTabs"
-
-// import Loader from "./Loader";
-
 import UserSession from './UserSession';
-
 import {
     strateegiaProjects,
     strateegiaMissions,
@@ -54,11 +47,9 @@ class MainContent extends React.Component {
         let stMissions = [];
         let stMaps = [];
         let stDivergenceContents = [];
-        // let stPoints = [];
         let stDivergencePoints = [];
         let stConvergencePoints = [];
         let stConversationPoints = [];
-        let stKitQuestions = []
         let stReplies = [];
         let userStReplies = [];
         let userCommentReplies = [];
@@ -70,11 +61,9 @@ class MainContent extends React.Component {
             try {
                 const projects = await strateegiaProjects({ token: token });
                 projects.forEach(function (lab) {
-                    // console.log(lab)
                     lab.projects.forEach(function (project) {
                         stProjects.push(project);
                     })
-                    // console.log(stProjects[0].id)
                 })
             } catch (e) {
                 console.log('catch strateegiaProjects:', e);
@@ -113,7 +102,6 @@ class MainContent extends React.Component {
             try {
                 stMaps.forEach(function (map) {
                     map.points.forEach(function (point) {
-                        // stPoints.push(point);
                         switch (point.point_type) {
                             case 'DIVERGENCE':
                                 stDivergencePoints.push(point);
@@ -135,14 +123,11 @@ class MainContent extends React.Component {
 
             this.setState({ fetching_state: [50, 'Verificando contribuições'] })
             for (const point of stDivergencePoints) {
-                // console.log(point)
                 try {
                     let has_contributed = await strateegiaHasContribution({ token: token, content_id: point.id });
-                    // console.log(has_contributed)
                     if (has_contributed.has_contributed === true) {
                         try {
                             let divergence_content = await strateegiaContents({ token: token, content_id: point.id });
-                            console.log(divergence_content)
                             stDivergenceContents.push(divergence_content);
                         } catch (e) {
                             console.log('catch strateegiaContents:', e);
@@ -154,24 +139,16 @@ class MainContent extends React.Component {
                 }
             }
 
-            try {
-                stDivergenceContents.forEach(function (content) {
-                    content.kit.questions.forEach(function (question) {
-                        stKitQuestions.push(question);
-                    })
-                })
-            } catch (e) {
-                console.log('catch stDivergenceContents.forEach:', e);
-            }
 
             this.setState({ fetching_state: [60, 'Capturando respostas'] })
             for (const content of stDivergenceContents) {
-                for (const question of content.kit.questions) {
+                for (const question of content.tool.questions) {
                     try {
                         let parent_comments = await strateegiaParentComments({ token, content_id: content.id, question_id: question.id });
                         stReplies.push(parent_comments);
                         for (const reply of parent_comments.content) {
                             if (reply.author.id === user_id) {
+                                // console.log(reply);
                                 userStReplies.push(reply);
                             }
                         }
@@ -198,10 +175,6 @@ class MainContent extends React.Component {
                 }
             }
 
-            
-
-
-
             strateegiaData.push({
                 stProjects,
                 stMissions,
@@ -214,7 +187,6 @@ class MainContent extends React.Component {
                 userCommentReplies,
                 userMentorhips
             })
-            // console.log(userMentorhips)
             return strateegiaData;
 
         } catch (e) {
@@ -224,9 +196,7 @@ class MainContent extends React.Component {
 
     async getStData(access_token) {
         try {
-            // console.log(strateegiaParentComments())
             const strateegiaData = await this.getStraeegiaData({ token: access_token });
-            console.log(strateegiaData)
             this.setState({
                 stData: {
                     'number_of_projects': strateegiaData[0].stProjects.length,
@@ -234,18 +204,9 @@ class MainContent extends React.Component {
                     'number_of_divergence_points': strateegiaData[0].stDivergencePoints.length,
                     'number_of_convergence_points': strateegiaData[0].stConvergencePoints.length,
                     'number_of_conversation_points': strateegiaData[0].stConversationPoints.length,
-                    // 'number_of_replies_from_user': strateegiaData[0].userStReplies.length,
-                    // 'number_of_comment_replies_from_user': strateegiaData[0].userCommentReplies.length,
+                    'number_of_replies_from_user': strateegiaData[0].userStReplies.length,
+                    'number_of_comment_replies_from_user': strateegiaData[0].userCommentReplies.length,
                     'number_of_mentorships': strateegiaData[0].userMentorhips.length,
-
-                    // 'number_of_projects': 8,
-                    // 'number_of_missions': 8,
-                    // 'number_of_divergence_points': 20,
-                    // 'number_of_convergence_points': 2,
-                    // 'number_of_conversation_points': 4,
-                    'number_of_replies_from_user': 18,
-                    'number_of_comment_replies_from_user': 25,
-                    // 'number_of_mentorships': 2
                 }
             }, function () {
                 this.setState({ fetching_st_data: false },
@@ -270,15 +231,7 @@ class MainContent extends React.Component {
 
                 this.props.handleCertLevelUpdate({ 'cert_level_participante': cert_levels.achieved_levels_participante, 'cert_level_mentor': cert_levels.achieved_levels_mentor })
             });
-            // setTimeout(function () {
-            //     this.setState({ fetching_st_data: false },
-            //         function () {
-            //             this.props.handleFetchingStDataUpdate(this.state.fetching_st_data)
-            //         }
-            //     );
-            // }.bind(this), 10000);
         } catch (error) {
-            // console.log('Erro no getStData:', error)
             this.setState({
                 fetching_state: [this.state.fetching_state[0], ('Erro em: "' + this.state.fetching_state[1] + '"')],
             })
@@ -300,7 +253,6 @@ class MainContent extends React.Component {
         this.setState({ fetching_st_data: true },
             function () {
                 this.props.handleFetchingStDataUpdate(this.state.fetching_st_data)
-                // console.log(this.state.fetching_st_data)
             }
         );
         this.getStData(UserSession.getToken())
@@ -308,11 +260,6 @@ class MainContent extends React.Component {
     }
 
     render() {
-        // if (this.state.fetching_st_data) {
-        //     return (
-        //         <Loader fetching_state={this.state.fetching_state} />
-        //     );
-        // }
 
         return (
 

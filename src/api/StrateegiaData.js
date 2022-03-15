@@ -59,7 +59,7 @@ export const strateegiaParentComments = async ({ token, content_id, question_id 
 
     var myHeaders = new Headers();
 
-    const url = 'https://api.strateegia.digital/projects/v1/content/' + content_id + '/question/' + question_id + '/comment'
+    const url = 'https://api.strateegia.digital/projects/v1/divergence-point/' + content_id + '/question/' + question_id + '/comment'
 
     myHeaders.set('Authorization', 'Bearer ' + token);
     myHeaders.append('Content-Type', 'application/json')
@@ -111,7 +111,7 @@ export const strateegiaCommentReplies = async ({ token, question_comment_id }) =
 
     var myHeaders = new Headers();
 
-    const url = 'https://api.strateegia.digital:443/projects/v1/question/comment/' + question_comment_id + '/reply'
+    const url = 'https://api.strateegia.digital/projects/v1/question/comment/' + question_comment_id + '/reply'
 
     myHeaders.set('Authorization', 'Bearer ' + token);
     myHeaders.append('Content-Type', 'application/json')
