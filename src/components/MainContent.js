@@ -76,7 +76,7 @@ class MainContent extends React.Component {
                     let missions = await strateegiaMissions({ token: token, project_id: project.id });
                     const users = missions.users;
                     users.forEach(function (user) {
-                        if (user.id === UserSession.getId() && user.project_roles.includes('MENTOR')) {
+                        if (user.id === UserSession.getId() && (user.project_roles.includes('MENTOR') || user.project_roles.includes('ADMIN'))) {
                             userMentorhips.push({ 'project_id': project.id, 'project_title': project.title })
                         }
                     })
