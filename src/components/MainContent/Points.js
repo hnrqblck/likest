@@ -1,5 +1,6 @@
 import React from 'react';
 import { strateegiaMaps } from "../../api/StrateegiaData";
+import Contribution from './Contribution';
 
 function useMapsData(token, maps = []) {
   const [{divergencePoints, convergencePoints, conversationPoints}, setState] = React.useState(
@@ -24,13 +25,11 @@ function useMapsData(token, maps = []) {
         })
       )
       .then(data => {
-        console.log(data);
         const points = data.reduce((acc, value) => ({
           divergencePoints: [...acc.divergencePoints, ...value.divergencePoints],
           convergencePoints: [...acc.convergencePoints, ...value.convergencePoints],
           conversationPoints: [...acc.conversationPoints, ...value.conversationPoints],
         }), {divergencePoints : [], convergencePoints: [], conversationPoints: []});
-        console.log('points', points);
         setState(points);
       })
       .catch(e => console.log(e))
@@ -50,6 +49,7 @@ const Points = ({token, maps}) => {
       <p>{divergencePoints.length}</p>
       <p>{convergencePoints.length}</p>
       <p>{conversationPoints.length}</p>
+      <Contribution dPoints={divergencePoints} token={token}/>
     </>
   )
 };

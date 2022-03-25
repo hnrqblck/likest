@@ -28,6 +28,23 @@ export const strateegiaProjects = async ({ token }) => {
   });
 };
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 export const fetchUserProjects = async (token) => {
   const { data } = await api("/projects/v1/project?size=100", {
     method: "GET",
@@ -59,6 +76,37 @@ export const strateegiaMaps = async (token, mission_id) => {
   });
     return data;
 }
+
+export const fetchContributions = async (token, content_id) => {
+  const { data } = await api(`/projects/v1/divergence-point/${content_id}/comment/contribution`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+    return data;
+};
+
+export const fetchDivergenceContents = async (token, content_id) => {
+  const { data } = await api(`/projects/v1/divergence-point/${content_id}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+    return data;
+};
+
+export const fetchParentComments= async (token, content_id, questionId) => {
+  const { data } = await api(`/projects/v1/divergence-point/${content_id}/question/${questionId}/comment`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+    return data;
+};
+
 
 
 
@@ -100,7 +148,7 @@ export const fetchProjectsById = async ({ token, project_id }) => {
   });
 };
 
-export const strateegiaParentComments = async ({ token, content_id, question_id }) => {
+export const strateegiaParentComments = async (token, content_id, question_id) => {
   return new Promise((resolve, reject) => {
 
     var myHeaders = new Headers();

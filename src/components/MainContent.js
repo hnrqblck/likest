@@ -157,10 +157,13 @@ class MainContent extends React.Component {
             console.log(performance.now() - ti); // 126811
             this.setState({ fetching_state: [60, 'Capturando respostas'] })
             for (const content of stDivergenceContents) {
+                // console.log(content)
                 for (const question of content.tool.questions) {
+                    console.log(question.id)
                     try {
                         let parent_comments = await strateegiaParentComments({ token, content_id: content.id, question_id: question.id });
                         stReplies.push(parent_comments);
+                        // console.log('pc', parent_comments)
                         for (const reply of parent_comments.content) {
                             if (reply.author.id === user_id) {
                                 // console.log(reply);
