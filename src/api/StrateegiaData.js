@@ -28,7 +28,53 @@ export const strateegiaProjects = async ({ token }) => {
   });
 };
 
-export const strateegiaMissions = async ({ token, project_id }) => {
+export const fetchUserProjects = async (token) => {
+  const { data } = await api("/projects/v1/project?size=100", {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+  return data;
+};
+
+export const fetchProjectById = async (token, id) => {
+  const {data} = await api(`/projects/v1/project/${id}`,
+  {
+    method: "GET", 
+    headers: {
+      Authorization: `Bearer ${token}`,
+  },
+})
+ return data;
+};
+
+export const strateegiaMaps = async (token, mission_id) => {
+
+  const { data } = await api(`/projects/v1/map/${mission_id}`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+    return data;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+export const fetchProjectsById = async ({ token, project_id }) => {
   return new Promise((resolve, reject) => {
 
     var myHeaders = new Headers();
@@ -236,13 +282,4 @@ export const strateegiaComments = async ({ token, content_id }) => {
   });
 };
 
-export const strateegiaMaps = async ({ token, mission_id }) => {
 
-  const { data } = await api(`/projects/v1/map/${mission_id}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  });
-    return data;
-}

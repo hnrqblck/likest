@@ -5,6 +5,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { Login } from './components/Login';
 import LinkedInShare from './components/LinkedInShare';
 import Home from './components/Home';
+import MainContenttt from './components/MainContent/MainContentcopy';
 
 function App() {
   return (
@@ -23,6 +24,10 @@ function App() {
           <Route path="/share">
             <LinkedInShare />
           </Route>
+          <Route path="/content">
+            <MainContenttt />
+          </Route>
+          
         </Switch>
       </BrowserRouter>
     </ChakraProvider>

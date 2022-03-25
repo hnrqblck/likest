@@ -11,6 +11,7 @@ import UserSession from './UserSession';
 import MainContent from "./MainContent";
 
 import SideBar from "./SideBar";
+import MainContenttt from "./MainContent/MainContentcopy";
 
 
 class Home extends React.Component {
@@ -135,6 +136,7 @@ class Home extends React.Component {
                             handleCertLevelUpdate={this.handleCertLevelUpdate}
                             handleFetchingStDataUpdate={this.handleFetchingStDataUpdate}
                         />
+                        <MainContenttt />
                     </Flex>
                 )
                 }

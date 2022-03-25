@@ -19,7 +19,7 @@ import {
 
 } from '@chakra-ui/react';
 
-// import { TiSocialLinkedin } from 'react-icons/ti';
+import { TiSocialLinkedin } from 'react-icons/ti';
 
 import { IoMdImage } from 'react-icons/io';
 
@@ -27,7 +27,7 @@ import { AiFillFileImage } from 'react-icons/ai';
 
 import { InAddModal } from "./InAddModal";
 
-// import { InShareModal } from "./InShareModal";
+import { InShareModal } from "./InShareModal";
 
 class SideBarCertificate extends React.Component {
     // constructor(props) {
@@ -121,12 +121,12 @@ class SideBarCertificate extends React.Component {
                         issue_date={this.props.issue_date}
                     />
 
-                    {/* <InShareModal
+                    <InShareModal
                         cert_type={this.props.cert_type}
                         cert_level_participante={this.props.cert_level.cert_level_participante}
                         cert_level_mentor={this.props.cert_level.cert_level_mentor}
                         issue_date={this.props.issue_date}
-                    /> */}
+                    />
 
                     <Divider paddingTop="1em" />
 

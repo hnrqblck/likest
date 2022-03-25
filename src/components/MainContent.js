@@ -7,13 +7,14 @@ import ContentTabs from "./ContentTabs"
 import UserSession from './UserSession';
 import {
     strateegiaProjects,
-    strateegiaMissions,
+    fetchProjectsById,
     strateegiaMaps,
     strateegiaHasContribution,
     strateegiaContents,
     strateegiaParentComments,
     strateegiaCommentReplies
 } from "../api/StrateegiaData";
+import MainContenttt from "./MainContent/MainContentcopy";
 
 class MainContent extends React.Component {
     constructor(props) {
@@ -39,7 +40,7 @@ class MainContent extends React.Component {
             this.props.handleTabIndexUpdate(this.state.tabIndex)
         });
     }
-
+    
     getStraeegiaData = async ({ token }) => {
         const user_id = UserSession.getId();
         let strateegiaData = [];
@@ -54,6 +55,7 @@ class MainContent extends React.Component {
         let userStReplies = [];
         let userCommentReplies = [];
         let userMentorhips = [];
+        const ti = performance.now();
 
         try {
             this.setState({ fetching_state: [10, 'Carregando Jornadas'] })
@@ -68,12 +70,19 @@ class MainContent extends React.Component {
             } catch (e) {
                 console.log('catch strateegiaProjects:', e);
             }
+            console.log(performance.now() - ti); // 399
+
+
+
+
+
+
 
             this.setState({ fetching_state: [20, 'Carregando Mapas'] })
             for (const project of stProjects) {
 
                 try {
-                    let missions = await strateegiaMissions({ token: token, project_id: project.id });
+                    let missions = await fetchProjectsById({ token: token, project_id: project.id });
                     const users = missions.users;
                     users.forEach(function (user) {
                         if (user.id === UserSession.getId() && (user.project_roles.includes('MENTOR') || user.project_roles.includes('ADMIN'))) {
@@ -86,19 +95,25 @@ class MainContent extends React.Component {
                     console.log('catch strateegiaMissions:', e);
                 }
             }
+            console.log(performance.now() - ti); // 7597
+
+
+
+
+
 
             this.setState({ fetching_state: [30, 'Carregando Mapas'] })
             for (const mission of stMissions) {
                 for (const maps of mission.maps) {
                     try {
-                        let map = await strateegiaMaps({ token: token, mission_id: maps.id });
+                        let map = await strateegiaMaps(token, maps.id);
                         stMaps.push(map);
                     } catch (e) {
                         console.log('catch strateegiaMaps:', e);
                     }
                 }                
             }
-
+            console.log(performance.now() - ti); // 20784
             try {
                 stMaps.forEach(function (map) {
                     map.points.forEach(function (point) {
@@ -120,7 +135,7 @@ class MainContent extends React.Component {
             } catch (e) {
                 console.log('catch stMaps forEach:', e);
             }
-
+            console.log(performance.now() - ti); // 20784
             this.setState({ fetching_state: [50, 'Verificando contribuições'] })
             for (const point of stDivergencePoints) {
                 try {
@@ -139,7 +154,7 @@ class MainContent extends React.Component {
                 }
             }
 
-
+            console.log(performance.now() - ti); // 126811
             this.setState({ fetching_state: [60, 'Capturando respostas'] })
             for (const content of stDivergenceContents) {
                 for (const question of content.tool.questions) {
@@ -157,7 +172,7 @@ class MainContent extends React.Component {
                     }
                 }
             }
-
+            console.log(performance.now() - ti); // 151751
             this.setState({ fetching_state: [80, 'Capturando comentários'] })
             for (const reply of stReplies) {
                 for (const content of reply.content) {
@@ -174,7 +189,7 @@ class MainContent extends React.Component {
                     }
                 }
             }
-
+            console.log(performance.now() - ti); // 230068
             strateegiaData.push({
                 stProjects,
                 stMissions,
@@ -207,6 +222,15 @@ class MainContent extends React.Component {
                     'number_of_replies_from_user': strateegiaData[0].userStReplies.length,
                     'number_of_comment_replies_from_user': strateegiaData[0].userCommentReplies.length,
                     'number_of_mentorships': strateegiaData[0].userMentorhips.length,
+
+                    // 'number_of_projects': 10,
+                    // 'number_of_missions': 20,
+                    // 'number_of_divergence_points': 30,
+                    // 'number_of_convergence_points': 40,
+                    // 'number_of_conversation_points': 50,
+                    // 'number_of_replies_from_user': 60,
+                    // 'number_of_comment_replies_from_user': 70,
+                    // 'number_of_mentorships': 80,
                 }
             }, function () {
                 this.setState({ fetching_st_data: false },
@@ -262,8 +286,8 @@ class MainContent extends React.Component {
     render() {
 
         return (
-
             <Box height="fit-content">
+                
                 <ContentTabs
                     fetching_st_data={this.state.fetching_st_data}
                     fetching_state={this.state.fetching_state}
