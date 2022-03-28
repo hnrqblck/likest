@@ -49,7 +49,7 @@ const Points = ({token, maps}) => {
       <p>{divergencePoints.length}</p>
       <p>{convergencePoints.length}</p>
       <p>{conversationPoints.length}</p>
-      <Contribution dPoints={divergencePoints} token={token}/>
+      <Contribution dPoints={divergencePoints} token={token} />
     </>
   )
 };
