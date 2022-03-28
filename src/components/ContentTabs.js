@@ -26,18 +26,19 @@ class ContentTabs extends React.Component {
         };
     }
 
-    handleTabsChange = (index) => {
-        this.setState({ tabIndex: index }, function () {
-            this.props.handleTabIndexUpdate(this.state.tabIndex)
-        });
-    }
+    // handleTabsChange = (index) => {
+    //     this.setState({ tabIndex: index },
+    //          function () {
+    //         this.props.handleTabIndexUpdate(this.state.tabIndex)
+    //     });
+    // }
 
     componentDidMount() {
         // console.log(this.props.number_of_mentorships)
-        this.handleTabsChange(0)
+        // this.handleTabsChange(0)
     }
-
     render() {
+        console.log(this.state.tabIndex)
         return (
             <>
                 <Flex height="fit-content">
@@ -62,8 +63,8 @@ class ContentTabs extends React.Component {
                             ) : (
                                 <>
                                     <TabList>
-                                        <Tab>Certificado</Tab>
-                                        <Tab>Estatísticas</Tab>
+                                        <Tab onClick={() => this.setState({ tabIndex: 0 })}>Certificado</Tab>
+                                        <Tab onClick={() => this.setState({ tabIndex: 1 })}>Estatísticas</Tab>
                                     </TabList>
                                     <TabPanels paddingTop="1vh">
                                         <TabPanel>

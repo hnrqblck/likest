@@ -107,6 +107,16 @@ export const fetchParentComments= async (token, content_id, questionId) => {
     return data;
 };
 
+export const fetchReplyComments= async (token, questionCommentId) => {
+  const { data } = await api(`/projects/v1/question/comment/${questionCommentId}/reply`, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+    return data;
+};
+
 
 
 

@@ -15,6 +15,7 @@ import {
     strateegiaCommentReplies
 } from "../api/StrateegiaData";
 import MainContenttt from "./MainContent/MainContentcopy";
+import { useProjectsData } from './MainContent/Projects'
 
 class MainContent extends React.Component {
     constructor(props) {
@@ -215,25 +216,26 @@ class MainContent extends React.Component {
     async getStData(access_token) {
         try {
             const strateegiaData = await this.getStraeegiaData({ token: access_token });
+            // const {usersProjects, maps, users} = useProjectsData();
             this.setState({
                 stData: {
-                    'number_of_projects': strateegiaData[0].stProjects.length,
-                    'number_of_missions': strateegiaData[0].stMaps.length,
+                    // 'number_of_projects': usersProjects.length,
+                    // 'number_of_missions': maps.length,
                     'number_of_divergence_points': strateegiaData[0].stDivergencePoints.length,
                     'number_of_convergence_points': strateegiaData[0].stConvergencePoints.length,
                     'number_of_conversation_points': strateegiaData[0].stConversationPoints.length,
                     'number_of_replies_from_user': strateegiaData[0].userStReplies.length,
                     'number_of_comment_replies_from_user': strateegiaData[0].userCommentReplies.length,
-                    'number_of_mentorships': strateegiaData[0].userMentorhips.length,
+                    // 'number_of_mentorships': users.length,
 
-                    // 'number_of_projects': 10,
-                    // 'number_of_missions': 20,
+                    'number_of_projects': 10,
+                    'number_of_missions': 20,
                     // 'number_of_divergence_points': 30,
                     // 'number_of_convergence_points': 40,
                     // 'number_of_conversation_points': 50,
                     // 'number_of_replies_from_user': 60,
                     // 'number_of_comment_replies_from_user': 70,
-                    // 'number_of_mentorships': 80,
+                    'number_of_mentorships': 80,
                 }
             }, function () {
                 this.setState({ fetching_st_data: false },

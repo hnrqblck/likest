@@ -2,7 +2,7 @@ import React from 'react';
 import { strateegiaMaps } from "../../api/StrateegiaData";
 import Contribution from './Contribution';
 
-function useMapsData(token, maps = []) {
+export function useMapsData(token, maps = []) {
   const [{divergencePoints, convergencePoints, conversationPoints}, setState] = React.useState(
     {
       divergencePoints: [],
@@ -19,7 +19,6 @@ function useMapsData(token, maps = []) {
               const dPoints = points.filter(point => point.point_type === 'DIVERGENCE')
               const cgPoints = points.filter(point => point.point_type === 'CONVERGENCE');
               const cvPoints = points.filter(point => point.point_type === 'CONVERSATION');
-              // console.log(points);
               return {divergencePoints: dPoints, convergencePoints: cgPoints, conversationPoints: cvPoints};
             })
         })
@@ -40,18 +39,18 @@ function useMapsData(token, maps = []) {
 
 }
 
-const Points = ({token, maps}) => {
+// const Points = ({token, maps}) => {
 
-  const {divergencePoints, convergencePoints, conversationPoints} = useMapsData(token, maps);
+//   const {divergencePoints, convergencePoints, conversationPoints} = useMapsData(token, maps);
 
-  return (
-    <>
-      <p>{divergencePoints.length}</p>
-      <p>{convergencePoints.length}</p>
-      <p>{conversationPoints.length}</p>
-      <Contribution dPoints={divergencePoints} token={token} />
-    </>
-  )
-};
+//   return (
+//     <>
+//       <p>divergence points {divergencePoints.length}</p>
+//       <p>convergence Points {convergencePoints.length}</p>
+//       <p>conversation Points {conversationPoints.length}</p>
+//       <Contribution dPoints={divergencePoints} token={token} />
+//     </>
+//   )
+// };
 
-export default Points;
+// export default Points;

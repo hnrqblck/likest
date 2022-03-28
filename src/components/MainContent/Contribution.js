@@ -1,13 +1,14 @@
 import React from 'react';
-import { fetchContributions, fetchDivergenceContents, strateegiaParentComments, fetchParentComments } from "../../api/StrateegiaData";
+import { fetchContributions, fetchDivergenceContents, fetchParentComments, fetchReplyComments } from "../../api/StrateegiaData";
 import UserSession from '../UserSession';
 
-    function useDiPoints(token, dPoints) {
+    export function useDiPoints(token, dPoints) {
         const userId = UserSession.getId();
 
         const [contents, setdContents] = React.useState([]);
         const [allReplies, setAllReplies] = React.useState([]);
         const [userReplies, setUserReplies] = React.useState([]);
+        const [userComments, setUserComments] = React.useState([]);
 
 
         React.useEffect(() => {
@@ -59,17 +60,30 @@ import UserSession from '../UserSession';
         }, [contents]);
 
         React.useEffect(() => {
-            console.log(allReplies);
+            Promise.all(
+                allReplies.map(reply => {
+                    return fetchReplyComments(token, reply.id)
+                    .then(({content}) => {
+                        const userQuestionComments = content.filter(ct => ct.author.id === userId);
+                        return userQuestionComments;
+                    })
+                })
+            )
+            .then(data => {
+                const filterData = data.filter(value => value.length > 0);
+                const userCommentReplies = filterData.reduce((acc, value) => {return [...acc, ...value]}, []);
+                setUserComments(userCommentReplies);
+            })
         }, [allReplies]);
 
-        return {contents, allReplies, userReplies};
+        return {userComments, userReplies};
 
     }
 
-const Contribution = ({token, dPoints}) => {
+// const Contribution = ({token, dPoints}) => {
     
 
-    const {contents, allReplies, userReplies} = useDiPoints(token, dPoints)
+//     const { userComments, userReplies } = useDiPoints(token, dPoints)
     
 
     
@@ -77,9 +91,12 @@ const Contribution = ({token, dPoints}) => {
 
     
 
-  return (
-    <div>{userReplies.length}</div>
-  )
-};
+//   return (
+//     <>
+//         <p>replies {userReplies.length}</p>
+//         <p>comments {userComments.length}</p>
+//     </>
+//   )
+// };
 
-export default Contribution;
+// export default Contribution;
