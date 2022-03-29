@@ -5,7 +5,7 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { Login } from './components/Login';
 import LinkedInShare from './components/LinkedInShare';
 import Home from './components/Home';
-import MainContenttt from './components/MainContent/MainContentcopy';
+import { TabIndex } from './components/Context/TabIndexContext'
 
 function App() {
   return (
@@ -19,13 +19,12 @@ function App() {
             <Login />
           </Route>
           <Route path="/home">
-            <Home />
+            <TabIndex>
+              <Home />
+            </TabIndex>
           </Route>
           <Route path="/share">
             <LinkedInShare />
-          </Route>
-          <Route path="/content">
-            <MainContenttt />
           </Route>
           
         </Switch>

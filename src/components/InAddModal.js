@@ -19,16 +19,19 @@ function handleClickAdd(data) {
 
     let cert_name = '';
     let cert_level = '';
+    console.log(data.cert_type)
+    // console.log(data.cert_type)
 
     if (data.cert_type === 'participante') {
-        switch (data.cert_level_participante) {
-            case 1:
+        const level = localStorage.getItem('pLevel');
+        switch (level) {
+            case '1':
                 cert_level = 'Inicitante'
                 break;
-            case 2:
+            case '2':
                 cert_level = 'Intermediário'
                 break;
-            case 3:
+            case '3':
                 cert_level = 'Avançado'
                 break;
             default:
@@ -36,14 +39,15 @@ function handleClickAdd(data) {
         }
         cert_name = 'Experiência em Jornadas de Transformação Digital na plataforma strateegia.digital - Nível ' + cert_level;
     } else {
-        switch (data.cert_level_mentor) {
-            case 1:
+        const level = localStorage.getItem('mLevel');
+        switch (level) {
+            case '1':
                 cert_level = 'Inicitante'
                 break;
-            case 2:
+            case '2':
                 cert_level = 'Intermediário'
                 break;
-            case 3:
+            case '3':
                 cert_level = 'Avançado'
                 break;
             default:
@@ -51,13 +55,15 @@ function handleClickAdd(data) {
         }
         cert_name = 'Experiência com habilitação de Jornadas de Transformação Digital na plataforma strateegia.digital - Nível ' + cert_level;
     }
-
+    
+    
     let url = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name=${cert_name}&organizationId=76088100&issueYear=${data.issue_date.year}&issueMonth=${data.issue_date.month}`
     window.open(url, '_blank');
 };
 
 export function InAddModal(props) {
     const { isOpen, onOpen, onClose } = useDisclosure()
+    // console.log(props.cert_type)
     return (
         <>
             <Button

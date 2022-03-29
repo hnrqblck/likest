@@ -38,6 +38,7 @@ import UserSession from '../UserSession';
                     const questionId = question.id;
                     qtObj.obj = {id, questionId};
                     qtArr.push('contentId', id, 'questionId', questionId);
+                    return
                 })
                 // console.log(qtObj)
                 return qtObj;

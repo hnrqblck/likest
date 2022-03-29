@@ -13,8 +13,6 @@ class Loader extends React.Component {
     render() {
         return (
 
-
-
             <AspectRatio ratio={16 / 9.76} width="62vw">
                 <Flex
                     backgroundSize="cover"
@@ -32,7 +30,7 @@ class Loader extends React.Component {
                                 <Flex flexDirection="column" >
                                     <Flex flexDirection="column">
                                         <Text fontSize="md">
-                                            Isso pode levar alguns minutos...
+                                            Isso pode levar alguns segundos...
                                         </Text>
                                     </Flex>
                                     <Box
