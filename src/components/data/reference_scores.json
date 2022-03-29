@@ -3,7 +3,7 @@
         {
             "level": 1,
             "level_name": "Iniciante",
-            "number_of_projects": 0,
+            "number_of_projects": 0, 
             "number_of_missions": 0,
             "number_of_divergence_points": 0,
             "number_of_convergence_points": 0,

@@ -10,7 +10,6 @@ import StatsTable from './StatsTable'
 class Stats extends React.Component {
 
     render() {
-
         return (
             <AspectRatio ratio={16 / 9.76} width="62vw">
                 <Flex

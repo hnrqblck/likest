@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
     Box,
     Tabs,
@@ -9,41 +8,23 @@ import {
     TabPanel,
     Flex,
 } from "@chakra-ui/react"
-
 import Certificate from "./Certificate";
-
 import Loader from "./Loader";
-
 // import LinkedIn from "./LinkedIn";
-
 import Stats from "./Stats";
+import { TabIndexContext } from "./Context/TabIndexContext";
 
-class ContentTabs extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            tabIndex: 0
-        };
-    }
 
-    handleTabsChange = (index) => {
-        this.setState({ tabIndex: index }, function () {
-            this.props.handleTabIndexUpdate(this.state.tabIndex)
-        });
-    }
+const ContentTabs = (props) => {
+    // const [tabIndex, setTabIndex] = React.useState(0);
+    const tabIndex = React.useContext(TabIndexContext);
 
-    componentDidMount() {
-        // console.log(this.props.number_of_mentorships)
-        this.handleTabsChange(0)
-    }
-
-    render() {
-        return (
-            <>
+  return (
+    <>
                 <Flex height="fit-content">
-                    <Tabs index={this.state.tabIndex} onChange={this.handleTabsChange} isFitted size="sm" width="63.5vw" colorScheme="blue">
+                    <Tabs index={tabIndex.tabInd} isFitted size="sm" width="63.5vw" colorScheme="blue">
 
-                        {this.props.fetching_st_data ?
+                        {props.fetching_st_data ?
                             (<>
                                 <TabList>
                                     <Tab isDisabled>Certificado</Tab>
@@ -52,7 +33,7 @@ class ContentTabs extends React.Component {
                                 <TabPanels>
                                     <TabPanel>
                                         <Box paddingTop="1vh">
-                                            <Loader fetching_state={this.props.fetching_state}></Loader>
+                                            <Loader fetching_state={props.fetching_state}></Loader>
                                         </Box>
                                     </TabPanel>
                                     <TabPanel>
@@ -62,35 +43,37 @@ class ContentTabs extends React.Component {
                             ) : (
                                 <>
                                     <TabList>
-                                        <Tab>Certificado</Tab>
-                                        <Tab>Estatísticas</Tab>
+                                        <Tab onClick={() => tabIndex.handleTabIndex(0)}>
+                                            Certificado
+                                        </Tab>
+                                        <Tab onClick={() => tabIndex.handleTabIndex(1)}>Estatísticas</Tab>
                                     </TabList>
                                     <TabPanels paddingTop="1vh">
                                         <TabPanel>
                                             <Box >
                                                 <Certificate
-                                                    cert_level_participante={this.props.cert_level_participante}
-                                                    cert_level_mentor={this.props.cert_level_mentor}
-                                                    issue_date={this.props.issue_date}
-                                                    cert_type={this.props.cert_type}
+                                                    cert_level_participante={props.cert_level_participante}
+                                                    cert_level_mentor={props.cert_level_mentor}
+                                                    issue_date={props.issue_date}
+                                                    cert_type={props.cert_type}
                                                 />
                                             </Box>
                                         </TabPanel>
                                         <TabPanel>
                                             <Stats
-                                                cert_level_participante={this.props.cert_level_participante}
-                                                cert_level_mentor={this.props.cert_level_mentor}
-                                                cert_type={this.props.cert_type}
-                                                has_mentorship={this.props.has_mentorship}
-                                                issue_date={this.props.issue_date}
-                                                number_of_projects={this.props.number_of_projects}
-                                                number_of_missions={this.props.number_of_missions}
-                                                number_of_divergence_points={this.props.number_of_divergence_points}
-                                                number_of_convergence_points={this.props.number_of_convergence_points}
-                                                number_of_conversation_points={this.props.number_of_conversation_points}
-                                                number_of_replies_from_user={this.props.number_of_replies_from_user}
-                                                number_of_comment_replies_from_user={this.props.number_of_comment_replies_from_user}
-                                                number_of_mentorships={this.props.number_of_mentorships}
+                                                cert_level_participante={props.cert_level_participante}
+                                                cert_level_mentor={props.cert_level_mentor}
+                                                cert_type={props.cert_type}
+                                                has_mentorship={props.has_mentorship}
+                                                issue_date={props.issue_date}
+                                                number_of_projects={props.number_of_projects}
+                                                number_of_missions={props.number_of_missions}
+                                                number_of_divergence_points={props.number_of_divergence_points}
+                                                number_of_convergence_points={props.number_of_convergence_points}
+                                                number_of_conversation_points={props.number_of_conversation_points}
+                                                number_of_replies_from_user={props.number_of_replies_from_user}
+                                                number_of_comment_replies_from_user={props.number_of_comment_replies_from_user}
+                                                number_of_mentorships={props.number_of_mentorships}
                                             />
                                         </TabPanel>
                                     </TabPanels>
@@ -99,8 +82,7 @@ class ContentTabs extends React.Component {
                     </Tabs>
                 </Flex>
             </>
-        )
-    }
+  )
 }
 
 export default ContentTabs;

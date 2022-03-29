@@ -54,9 +54,6 @@ class StatsTable extends React.Component {
             })
         }
         this.setState({ next_level_data: next_level_data[0] },
-            // function () {
-            //     console.log(this.state.next_level_data)
-            // }
         )
     }
 
