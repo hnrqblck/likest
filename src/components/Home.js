@@ -6,6 +6,7 @@ import UserSession from './UserSession';
 // import MainContent from "./MainContent";
 import SideBar from "./SideBar";
 import MainContent from "./MainContent/MainContent";
+import { fetchUser } from '../api/LinkedInFunctions';
 import { useHistory } from "react-router-dom";
 
 const Home = (props) => {
@@ -27,6 +28,13 @@ const Home = (props) => {
             day: current_date.substring(8, 10)
         }
     }
+
+    React.useEffect(() => {
+        console.log('oi, entrei');
+        fetchUser().then(data => console.log('1', data));
+        console.log('tchau, saiu');
+
+    }, []);
 
     const handleFetchingStDataUpdate = fetching_st_data => setFetchingStData(fetching_st_data);
     const handleTabIndexUpdate = tab_index => setTabIndex(tab_index);

@@ -24,7 +24,7 @@ function App() {
             </TabIndex>
           </Route>
           <Route path="/share">
-            <LinkedInShare />
+            {/* <LinkedInShare /> */}
           </Route>
           
         </Switch>
