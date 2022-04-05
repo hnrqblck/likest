@@ -18,9 +18,36 @@ import { IoMdImage } from 'react-icons/io';
 import { AiFillFileImage } from 'react-icons/ai';
 import { InAddModal } from "./InAddModal";
 import { InShareModal } from "./InShareModal";
-
+import axios from 'axios';
 
 const SideBarCertificate = (props) => {
+
+    const [linkedinLink, setLinkedinLink] = React.useState('');
+    const [img, setImg] = React.useState('');
+
+    
+    React.useEffect(() => {
+        axios.get('http://localhost:3001/home').then(resp => setLinkedinLink(resp.data));
+    }, [img])
+
+    async function postImage(img) {
+                
+        try {
+          await axios.post('http://localhost:3001/image',
+        //   {
+        //    Headers: {
+        //         'Access-Control-Allow-Origin' : '*',
+        //         'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
+        //    } 
+        //   },
+           {
+            img,
+          })
+        } catch (error) {
+          console.log(error);
+        }
+      
+      }
 
     function saveCertPng() {
         const component = document.getElementById('cert');
@@ -30,9 +57,13 @@ const SideBarCertificate = (props) => {
             canvasHeight: 1153,
         })
             .then(png => {
+                postImage(png);
+                setImg(png)
                 saveAs(png, 'Certificado_Strateegia.png');
             });
     }
+
+
 
     function saveCertPdf() {
         const component = document.getElementById('cert');
@@ -86,6 +117,7 @@ const SideBarCertificate = (props) => {
                         Certificado Habilitador
                     </FormLabel>
                 </FormControl>
+                {/* {backE} */}
             </>}
 
 
@@ -104,12 +136,13 @@ const SideBarCertificate = (props) => {
                     issue_date={props.issue_date}
                 />
 
-                {/* <InShareModal
+                <InShareModal
+                    
                     cert_type={props.cert_type}
                     cert_level_participante={props.cert_level.cert_level_participante}
                     cert_level_mentor={props.cert_level.cert_level_mentor}
                     issue_date={props.issue_date}
-                /> */}
+                />
 
                 <Divider paddingTop="1em" />
 

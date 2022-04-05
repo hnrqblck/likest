@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
     Modal,
     ModalOverlay,
@@ -11,35 +10,35 @@ import {
     useDisclosure,
     Text
 } from "@chakra-ui/react"
-
 import { TiSocialLinkedin } from 'react-icons/ti';
-
 import { openSignInWindow } from "./Popup";
-    
+import { useLocation } from "react-router-dom";
 const axios = require('axios');
 
-const handleClickShare = async () => {
-    window.addEventListener('message', event => this.receiveMessage(event), false);
-    axios.get('https://radiant-brushlands-64499.herokuapp.com/https://www.linkedin.com/oauth/v2/authorization?scope=r_liteprofile%20w_member_social', {
-        params: {
-            response_type: 'code',
-            client_id: '782r44eaplkfzr',
-            redirect_uri: 'http://localhost:3000/share',
-            state: 'JSNCUEJH=83jfiD2çH83hidhs9',
-            // scope: 'r_liteprofile%20w_member_social',
-        }
-    })
-        .then(function (response) {
-            // window.open(response.headers['x-final-url'], '_blank').focus();
-            openSignInWindow(response.headers['x-final-url'], window, 'Login no LinkedIn', 600, 700)
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-        .then(function () {
-            // always executed
-        });
-};
+// const handleClickShare = async () => {
+//     window.addEventListener('message', event => this.receiveMessage(event), false);
+//     axios.get('https://radiant-brushlands-64499.herokuapp.com/https://www.linkedin.com/oauth/v2/authorization?scope=r_liteprofile%20w_member_social', {
+//         params: {
+//             response_type: 'code',
+//             client_id: '782r44eaplkfzr',
+//             redirect_uri: 'http://localhost:3000/share',
+//             state: 'JSNCUEJH=83jfiD2çH83hidhs9',
+//             // scope: 'r_liteprofile%20w_member_social',
+//         }
+//     })
+//         .then(function (response) {
+//             // window.open(response.headers['x-final-url'], '_blank').focus();
+//             openSignInWindow(response.headers['x-final-url'], window, 'Login no LinkedIn', 600, 700)
+//         })
+//         .catch(function (error) {
+//             console.log(error);
+//         })
+//         .then(function () {
+//             // always executed
+//         });
+// };
+
+
 
 // function handleClickAdd(data) {
 
@@ -83,7 +82,39 @@ const handleClickShare = async () => {
 // };
 
 export function InShareModal(props) {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const [linkedinLink, setLinkedinLink] = React.useState('');
+    const [hasParams, setHasParams] = React.useState(false);
+    const { isOpen, onOpen, onClose } = useDisclosure();
+
+    const search = useLocation().search;
+    
+    React.useEffect(() => {
+        axios.get('http://localhost:3001/home').then(resp => setLinkedinLink(resp.data));
+    }, []);
+    
+    React.useEffect(() => {
+        if (search) {
+            const code = new URLSearchParams(search).get('code');
+            const state = new URLSearchParams(search).get('state');
+            postToken(code, state);
+        }
+    }, [])
+
+    async function postToken(code, state) {           
+        try {
+          await axios.post('http://localhost:3001/token',
+           {
+            code,
+            state
+          })
+        } catch (error) {
+          console.log(error);
+        }
+    }
+
+
+
     return (
         <>
             <Button
@@ -115,17 +146,20 @@ export function InShareModal(props) {
                         <Button colorScheme="blue" mr={3} onClick={onClose}>
                             Voltar
                         </Button>
+                        <a href={linkedinLink}>
                         <Button variant="ghost" colorScheme="blue" onClick={() => {
-                            handleClickShare(
-                                {
-                                    issue_date: props.issue_date,
-                                    cert_type: props.cert_type,
-                                    cert_level_participante: props.cert_level_participante,
-                                    cert_level_mentor: props.cert_level_mentor
-                                }
-                            )
+                            // handleClickShare(
+                            //     {
+                            //         issue_date: props.issue_date,
+                            //         cert_type: props.cert_type,
+                            //         cert_level_participante: props.cert_level_participante,
+                            //         cert_level_mentor: props.cert_level_mentor
+                            //     }
+                            // )
+                            console.log('oi')
                         }}>
                             Publicar no feed</Button>
+                            </a>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
