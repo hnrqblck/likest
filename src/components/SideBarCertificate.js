@@ -52,19 +52,34 @@ const SideBarCertificate = (props) => {
     function saveCertPng() {
         const component = document.getElementById('cert');
 
-        htmlToImage.toPng(component, {
+        htmlToImage.toJpeg(component, {
             canvasWidth: 1889,
             canvasHeight: 1153,
         })
-            .then(png => {
-                postImage(png);
-                setImg(png)
-                saveAs(png, 'Certificado_Strateegia.png');
+            .then(jpeg => {
+                postImage(jpeg)
+                console.log(jpeg)
+                setImg(jpeg)
+                console.log(setImg(jpeg))
+                saveAs(jpeg, 'Certificado_Strateegia.png');
             });
     }
 
+    function convertToArrayBuffer(item) {
+        const promise = fetch(item)
+        .then(b => b.arrayBuffer())
+        .then(buff => buff)
+        .catch(e => console.log(e));
+        return promise;
+    }
 
-
+    async function result(png) {
+        const arr = await convertToArrayBuffer(png)
+        const int8view = new Uint8Array(arr)
+        postImage(int8view);
+        console.log(int8view);
+        return int8view;
+    }
     function saveCertPdf() {
         const component = document.getElementById('cert');
         const pdf_file = new jsPDF({

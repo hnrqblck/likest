@@ -1,11 +1,9 @@
 const express = require('express');
 const app = express();
 const cors = require('cors');
-let dt = require('./globaldata.js').data;
-const _request = require('./globaldata')._request;
-const getLinkedinId = require('./example').getLinkedinId;
-const postShare = require('./example').postShare;
-const registerImage = require('./example').registerImage;
+const { getLinkedinId, postShare, registerImage, uploadImage } = require('./example');
+const { _request } = require('./globaldata');
+const dt = require('./globaldata.js').data;
 
 require('dotenv').config();
 app.use(express.json({ limit: '25mb' }));
@@ -23,29 +21,33 @@ app.get('/home', cors(), async(req, res) => {
 })
 
 app.post('/image', cors(), async (req, res) => {
-    let {img} = req.body;
-    let buff = Buffer.from(img, 'base64');
-    const str = buff.toString('utf-8');
-    global.data = str;
-    console.log('oi')
-});
-console.log(global.data)
+    const {img} = req.body;
+    global.data = img;
+})
+
+
 app.post('/token', cors(), async (req, res) => {
     const {code, state} = req.body;
     const pathQ = dt.path_query(code, dt.client_id, dt.redirect_uri, dt.client_secret);
     const body = '';
+
     _request(dt.method, dt.hostname, dt.path(pathQ), dt.headers, body)
         .then(r => {
-            console.log('1', r)
             if(r.status == 200){
                 const access_token = (JSON.parse(r.body).access_token);
                 getLinkedinId(access_token).then(ownerId => {
                     registerImage(access_token, ownerId).then(r => {
-                        console.log(r.body);
+                        const uploadUrl = JSON.parse(r.body).value.uploadMechanism['com.linkedin.digitalmedia.uploading.MediaUploadHttpRequest'].uploadUrl;
+                        const asset = JSON.parse(r.body).value.asset;
+                        const img = global.data;
+                        uploadImage(access_token, img, uploadUrl).then(r => {
+                            console.log(r)
+                            postShare(access_token, ownerId, dt.text, asset).then(res => {
+                            console.log('2', res); // status 201 signal successful posting
+                            })
+                            .catch(e => console.log(e))
+                        })
                     }).catch(e => console.log(e));
-                    // postShare(access_token, ownerId, dt.text).then(r => {
-                    //     console.log(r); // status 201 signal successful posting
-                    // }).catch(e => console.log(e));
                 }).catch(e => console.log(e));
             }
             else {
@@ -58,7 +60,6 @@ app.post('/token', cors(), async (req, res) => {
     
 })
 
-// exports.imgStr = globaldata;
 
 const PORT = process.env.PORT || 3001;
 

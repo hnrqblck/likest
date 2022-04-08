@@ -1,43 +1,9 @@
 'use-strict'
 
-// This sample will post a basic message in your LinkedIn profile
-
-
 const _request = require('./globaldata')._request;
-// const accessToken = require('./app').token;
-// const query_state = require('./app').state
-// const { imgStr } = require('./app');
-
-// ---------------------------------------------------------------------------------------------------------------------
-// Example
-// ---------------------------------------------------------------------------------------------------------------------
-
-let title = "Hello World!";
-let text = "UHUUU! Consegui destravar minhas habilidades estratégicas. Compartilho com vocês o meu desenvolvimento em processos criativos e colaboração incrível. STRATEEGIA, onde a sua ideia sai do ZERO. O que você pode começar hoje?";
-let shareUrl = "https://www.example.com/content.html"
-let shareThumbnailUrl = "https://www.example.com/image.jpg"
-// console.log('1', imgStr);
-
-// console.log(token);
+require('isomorphic-fetch');
 
 
-// if (accessToken) {
-//     getLinkedinId(accessToken).then(ownerId => {
-//         console.log(Buffer.from("", 'base64').toString('utf8'))
-//         registerImage(accessToken, ownerId).then(r => {
-//             console.log(r.body);
-//         }).catch(e => console.log(e));
-//         // postShare(accessToken, ownerId, title, text, shareUrl, shareThumbnailUrl).then(r => {
-//         //     console.log(r); // status 201 signal successful posting
-//         // }).catch(e => console.log(e));
-//     }).catch(e => console.log(e));
-// }
-
-// ---------------------------------------------------------------------------------------------------------------------
-// Generic Node.js API to post on LinkedIn
-// ---------------------------------------------------------------------------------------------------------------------
-
-// Get LinkedIn ID, i.e. ownerId
 exports.getLinkedinId = (accessToken) => {
     return new Promise((res, rej) => {
         let hostname = 'api.linkedin.com';
@@ -55,8 +21,7 @@ exports.getLinkedinId = (accessToken) => {
     })
 }
 
-// Publish content on LinkedIn
-exports.postShare = (accessToken, ownerId, text) => {
+exports.postShare = (accessToken, ownerId, text, asset) => {
     return new Promise((res, rej) => {
         let hostname = 'api.linkedin.com';
         let path = '/v2/ugcPosts';
@@ -69,7 +34,19 @@ exports.postShare = (accessToken, ownerId, text) => {
                     "shareCommentary": {
                         "text": text
                     },
-                    "shareMediaCategory": "NONE"
+                    "shareMediaCategory": "IMAGE",
+                    "media": [
+                        {
+                            "status": "READY",
+                            "description": {
+                                "text": "Center stage!"
+                            },
+                            "media": `${asset}`,
+                            "title": {
+                                "text": "LinkedIn Talent Connect 2021"
+                            }
+                        }
+                    ]
                 }
             },
             "visibility": {
@@ -88,6 +65,7 @@ exports.postShare = (accessToken, ownerId, text) => {
             res(r);
         }).catch(e => rej(e))
     })
+    
 }
 
 exports.registerImage = (accessToken, ownerId) => {
@@ -106,7 +84,8 @@ exports.registerImage = (accessToken, ownerId) => {
                         "relationshipType": "OWNER",
                         "identifier": "urn:li:userGeneratedContent"
                     }
-                ]
+                ],
+                supportedUploadMechanism: ['SYNCHRONOUS_UPLOAD'],
             }
         }
         const headers = {
@@ -123,37 +102,36 @@ exports.registerImage = (accessToken, ownerId) => {
     })
 }
 
+exports.uploadImage = async (accessToken, bodyCont, pathw) => {
+        try {
 
+            const img = Buffer.from(bodyCont.split(";base64,").pop(),"base64")
+            console.log(img)
+            
+            var requestOptions = {
+                method: 'PUT',
+                headers: {
+                    'Authorization': 'Bearer ' + accessToken,
+                    'cache-control': 'no-cache',
+                    'X-Restli-Protocol-Version': '2.0.0',
+                    'Content-Type': 'application/octet-stream',
+                    'x-li-format': 'json',
+                    'Content-Length': Buffer.byteLength(JSON.stringify(bodyCont))
+                },
+                body: img,
+                redirect: 'follow'
+            };
 
-// Generic HTTP requester
-// function _request(method, hostname, path, headers, body) {
-//     return new Promise((resolve, reject) => {
-//         let reqOpts = {
-//             method,
-//             hostname,
-//             path,
-//             headers,
-//             "rejectUnauthorized": false // WARNING: accepting unauthorised end points for testing ONLY
-//         };
-//         let resBody = "";
-//         let req = https.request(reqOpts, res => {
-//             res.on('data', data => {
-//                 resBody += data.toString('utf8');
-//             });
-//             res.on('end', () => {
-//                 resolve({
-//                     "status": res.statusCode,
-//                     "headers": res.headers,
-//                     "body": resBody
-//                 })
-//             });
-//         });
-//         req.on('error', e => {
-//             reject(e);
-//         });
-//         if (method !== 'GET') {
-//             req.write(body);
-//         }
-//         req.end();
-//     })
-// }
+            return await fetch(pathw,requestOptions)
+            .then(function(uploadResponse){
+                console.log(uploadResponse)
+                return JSON.parse(`{"size":${uploadResponse.size},"timeout":${uploadResponse.timeout}}`)
+            })
+            .catch(error => console.log(`Image upload error fetch: ${error}`))
+        } catch (error) {
+            console.log(`Image upload error: ${error}`)
+        }
+        
+  
+
+}
