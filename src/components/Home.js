@@ -6,7 +6,6 @@ import UserSession from './UserSession';
 // import MainContent from "./MainContent";
 import SideBar from "./SideBar";
 import MainContent from "./MainContent/MainContent";
-import { linkedInProfileData } from '../api/LinkedInApi';
 import { useHistory } from "react-router-dom";
 
 const Home = (props) => {
@@ -29,19 +28,6 @@ const Home = (props) => {
         }
     }
 
-    const getLinkedInProfileData = async (access_token) => {
-        let profile_data = await linkedInProfileData(access_token)
-
-        console.log(profile_data)
-    }
-
-    // React.useEffect(() => {
-    //     const tokenn = 'AQUzj1YWVrwdOmYljQ-Gs1ADSZ-0rcKeW8v9yuQIsDeVsGsp3ETCDbvWek1z6g3lQ97VNTbjOmVzerMMbgbmHak1IlmqPZN2zaLhtVSqCOg4-TpVvRbbwhGKTFVrbrd6qM_5xSeDB3SxPdWpXKoxJiI1ger2KkmE-BkZYWYEKO0cEBrqFszA3LutiKSpytd4jy9SEGaERItyXFuza_5GJ3zS56VywmETatbxp8Q74PNhC0mXqMFNGw7Sb-cvUYDTJOdTA9qRQg3tWRjHs4IuQktNm3m9RVTRPtDygy188Ldyi_zqoxqiekKKngWPsHqrh064SLW_zXnDRvJMAhIPrgg4IQBXoA';
-    //     console.log('oi, entrei');
-    //     getLinkedInProfileData(tokenn);
-    //     console.log('tchau, saiu');
-
-    // }, []);
 
     const handleFetchingStDataUpdate = fetching_st_data => setFetchingStData(fetching_st_data);
     const handleTabIndexUpdate = tab_index => setTabIndex(tab_index);
