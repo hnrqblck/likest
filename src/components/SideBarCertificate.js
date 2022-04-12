@@ -18,14 +18,19 @@ import { IoMdImage } from 'react-icons/io';
 import { AiFillFileImage } from 'react-icons/ai';
 import { InAddModal } from "./InAddModal";
 import { InShareModal } from "./InShareModal";
-
+import axios from 'axios';
 
 const SideBarCertificate = (props) => {
 
-    function saveCertPng() {
-        const component = document.getElementById('cert');
 
-        htmlToImage.toPng(component, {
+    
+
+    
+
+    function saveCertPng() {
+        // const component = document.getElementById('cert');
+
+        htmlToImage.toPng(document.getElementById('cert'), {
             canvasWidth: 1889,
             canvasHeight: 1153,
         })
@@ -86,6 +91,7 @@ const SideBarCertificate = (props) => {
                         Certificado Habilitador
                     </FormLabel>
                 </FormControl>
+                {/* {backE} */}
             </>}
 
 
@@ -104,12 +110,13 @@ const SideBarCertificate = (props) => {
                     issue_date={props.issue_date}
                 />
 
-                {/* <InShareModal
+                <InShareModal
+                    
                     cert_type={props.cert_type}
                     cert_level_participante={props.cert_level.cert_level_participante}
                     cert_level_mentor={props.cert_level.cert_level_mentor}
                     issue_date={props.issue_date}
-                /> */}
+                />
 
                 <Divider paddingTop="1em" />
 

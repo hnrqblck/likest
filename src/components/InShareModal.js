@@ -1,5 +1,4 @@
 import React from "react";
-
 import {
     Modal,
     ModalOverlay,
@@ -9,81 +8,94 @@ import {
     ModalBody,
     Button,
     useDisclosure,
-    Text
+    Text,
+    createStandaloneToast
 } from "@chakra-ui/react"
-
 import { TiSocialLinkedin } from 'react-icons/ti';
-
 import { openSignInWindow } from "./Popup";
-    
+import { useLocation } from "react-router-dom";
+import * as htmlToImage from 'html-to-image';
 const axios = require('axios');
 
-const handleClickShare = async () => {
-    window.addEventListener('message', event => this.receiveMessage(event), false);
-    axios.get('https://radiant-brushlands-64499.herokuapp.com/https://www.linkedin.com/oauth/v2/authorization?scope=r_liteprofile%20w_member_social', {
-        params: {
-            response_type: 'code',
-            client_id: '782r44eaplkfzr',
-            redirect_uri: 'http://localhost:3000/share',
-            state: 'JSNCUEJH=83jfiD2çH83hidhs9',
-            // scope: 'r_liteprofile%20w_member_social',
-        }
-    })
-        .then(function (response) {
-            // window.open(response.headers['x-final-url'], '_blank').focus();
-            openSignInWindow(response.headers['x-final-url'], window, 'Login no LinkedIn', 600, 700)
-        })
-        .catch(function (error) {
-            console.log(error);
-        })
-        .then(function () {
-            // always executed
-        });
-};
-
-// function handleClickAdd(data) {
-
-//     let cert_name = '';
-//     let cert_level = '';
-
-//     if (data.cert_type === 'participante') {
-//         switch (data.cert_level_participante) {
-//             case 1:
-//                 cert_level = 'Inicitante'
-//                 break;
-//             case 2:
-//                 cert_level = 'Intermediário'
-//                 break;
-//             case 3:
-//                 cert_level = 'Avançado'
-//                 break;
-//             default:
-//                 break;
-//         }
-//         cert_name = 'Experiência em Jornadas de Transformação Digital na plataforma strateegia.digital - Nível ' + cert_level;
-//     } else {
-//         switch (data.cert_level_mentor) {
-//             case 1:
-//                 cert_level = 'Inicitante'
-//                 break;
-//             case 2:
-//                 cert_level = 'Intermediário'
-//                 break;
-//             case 3:
-//                 cert_level = 'Avançado'
-//                 break;
-//             default:
-//                 break;
-//         }
-//         cert_name = 'Experiência com habilitação de Jornadas de Transformação Digital na plataforma strateegia.digital - Nível ' + cert_level;
-//     }
-
-//     let url = `https://www.linkedin.com/profile/add?startTask=CERTIFICATION_NAME&name=${cert_name}&organizationId=76088100&issueYear=${data.issue_date.year}&issueMonth=${data.issue_date.month}`
-//     window.open(url, '_blank');
-// };
 
 export function InShareModal(props) {
-    const { isOpen, onOpen, onClose } = useDisclosure()
+
+    const [linkedinLink, setLinkedinLink] = React.useState('');
+    const [post, setPost] = React.useState(false);
+    const [hasParams, setHasParams] = React.useState(false);
+    const { isOpen, onOpen, onClose } = useDisclosure();
+    const toast = createStandaloneToast();
+    const search = useLocation().search;
+
+    
+    
+    React.useEffect(() => {
+        axios.get('https://linkest-server.netlify.app/.netlify/functions/app/home').then(resp => setLinkedinLink(resp.data));
+        if (search) {
+            const code = new URLSearchParams(search).get('code');
+            const state = new URLSearchParams(search).get('state');
+            postToken(code, state);
+            setTimeout(() => {
+                axios.get('https://linkest-server.netlify.app/.netlify/functions/app/token').then(resp => setPost(resp.data))
+            }, 5000);
+                
+        }
+    }, []);
+
+    React.useEffect(() => {
+        if(post) {
+            toast({
+                title: 'Oba!',
+                description: 'Seu cerficado foi postado.',
+                status: 'success',
+                duration: 3000,
+                isClosable: true,
+            })
+        }
+    }, [post])
+
+    const share = () => {
+        const component = document.getElementById('cert');
+
+        htmlToImage.toJpeg(component, {
+            canvasWidth: 1889,
+            canvasHeight: 1153,
+        })
+        .then(img => {
+            postImage(img, props.cert_type)});
+    };
+
+    async function postToken(code, state) {           
+        try {
+          await axios.post('https://linkest-server.netlify.app/.netlify/functions/app/token',
+           {
+            code,
+            state
+          })
+        } catch (error) {
+          console.log(error);
+        }
+    }
+
+    async function postImage(img, certType) {
+
+        const level = certType === 'participante' ? localStorage.getItem('pLevel') : localStorage.getItem('mLevel');
+        
+                
+        try {
+          await axios.post('https://linkest-server.netlify.app/.netlify/functions/app/image',
+           {
+            img,
+            certType,
+            level
+          })
+        } catch (error) {
+          console.log(error);
+        }
+      console.log('oi')
+      }
+
+
     return (
         <>
             <Button
@@ -115,17 +127,12 @@ export function InShareModal(props) {
                         <Button colorScheme="blue" mr={3} onClick={onClose}>
                             Voltar
                         </Button>
+                        <a href={linkedinLink}>
                         <Button variant="ghost" colorScheme="blue" onClick={() => {
-                            handleClickShare(
-                                {
-                                    issue_date: props.issue_date,
-                                    cert_type: props.cert_type,
-                                    cert_level_participante: props.cert_level_participante,
-                                    cert_level_mentor: props.cert_level_mentor
-                                }
-                            )
+                            share();
                         }}>
                             Publicar no feed</Button>
+                            </a>
                     </ModalFooter>
                 </ModalContent>
             </Modal>
