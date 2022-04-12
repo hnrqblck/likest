@@ -48,7 +48,7 @@ const Home = (props) => {
     const handleMentorshipUpdate = has_mentorship => setHasMentorship(has_mentorship);
     const handleCertLevelUpdate = () => certType === 'participante' ? setCertLevel(localStorage.getItem('pLevel')) : setCertLevel(localStorage.getItem('mLevel'));
     const handleCertTypeUpdate = () => certType === 'participante' ? setCertType('mentor') : setCertType('participante');
-
+    
     setTimeout(() => {
         setFetchingStData(false);
         setIssueDate(getCurrentDate);
@@ -78,6 +78,7 @@ const Home = (props) => {
                         cert_level={certLevel}
                         issue_date={issueDate}
                         handleCertTypeUpdate={handleCertTypeUpdate}
+                        
                     />
                     {/* <Text>{state.tabIndex}</Text> */}
                     <MainContent

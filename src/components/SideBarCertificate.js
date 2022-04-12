@@ -22,64 +22,23 @@ import axios from 'axios';
 
 const SideBarCertificate = (props) => {
 
-    const [linkedinLink, setLinkedinLink] = React.useState('');
-    const [img, setImg] = React.useState('');
 
     
-    React.useEffect(() => {
-        axios.get('http://localhost:3001/home').then(resp => setLinkedinLink(resp.data));
-    }, [img])
 
-    async function postImage(img) {
-                
-        try {
-          await axios.post('http://localhost:3001/image',
-        //   {
-        //    Headers: {
-        //         'Access-Control-Allow-Origin' : '*',
-        //         'Access-Control-Allow-Methods':'GET,PUT,POST,DELETE,PATCH,OPTIONS',
-        //    } 
-        //   },
-           {
-            img,
-          })
-        } catch (error) {
-          console.log(error);
-        }
-      
-      }
+    
 
     function saveCertPng() {
-        const component = document.getElementById('cert');
+        // const component = document.getElementById('cert');
 
-        htmlToImage.toJpeg(component, {
+        htmlToImage.toPng(document.getElementById('cert'), {
             canvasWidth: 1889,
             canvasHeight: 1153,
         })
-            .then(jpeg => {
-                postImage(jpeg)
-                console.log(jpeg)
-                setImg(jpeg)
-                console.log(setImg(jpeg))
-                saveAs(jpeg, 'Certificado_Strateegia.png');
+            .then(png => {
+                saveAs(png, 'Certificado_Strateegia.png');
             });
     }
 
-    function convertToArrayBuffer(item) {
-        const promise = fetch(item)
-        .then(b => b.arrayBuffer())
-        .then(buff => buff)
-        .catch(e => console.log(e));
-        return promise;
-    }
-
-    async function result(png) {
-        const arr = await convertToArrayBuffer(png)
-        const int8view = new Uint8Array(arr)
-        postImage(int8view);
-        console.log(int8view);
-        return int8view;
-    }
     function saveCertPdf() {
         const component = document.getElementById('cert');
         const pdf_file = new jsPDF({
