@@ -30,13 +30,13 @@ export function InShareModal(props) {
     
     
     React.useEffect(() => {
-        axios.get('https://linkest-server.netlify.app/.netlify/functions/app/home').then(resp => setLinkedinLink(resp.data));
+        axios.get('https://linke-st-server.herokuapp.com/app/home').then(resp => setLinkedinLink(resp.data));
         if (search) {
             const code = new URLSearchParams(search).get('code');
             const state = new URLSearchParams(search).get('state');
             postToken(code, state);
             setTimeout(() => {
-                axios.get('https://linkest-server.netlify.app/.netlify/functions/app/token').then(resp => setPost(resp.data))
+                axios.get('https://linke-st-server.herokuapp.com/app/token').then(resp => setPost(resp.data))
             }, 5000);
                 
         }
@@ -67,7 +67,7 @@ export function InShareModal(props) {
 
     async function postToken(code, state) {           
         try {
-          await axios.post('https://linkest-server.netlify.app/.netlify/functions/app/token',
+          await axios.post('https://linke-st-server.herokuapp.com/app/token',
            {
             code,
             state
@@ -83,7 +83,7 @@ export function InShareModal(props) {
         
                 
         try {
-          await axios.post('https://linkest-server.netlify.app/.netlify/functions/app/image',
+          await axios.post('https://linke-st-server.herokuapp.com/app/image',
            {
             img,
             certType,
