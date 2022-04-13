@@ -62,7 +62,8 @@ export function InShareModal(props) {
             canvasHeight: 1153,
         })
         .then(img => {
-            postImage(img, props.cert_type)});
+            postImage(img, props.cert_type)}).then(r => console.log(r));
+            
     };
 
     async function postToken(code, state) {           
