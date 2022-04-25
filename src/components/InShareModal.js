@@ -30,13 +30,16 @@ export function InShareModal(props) {
     
     
     React.useEffect(() => {
-        axios.get('https://linke-st-server.herokuapp.com/home').then(resp => setLinkedinLink(resp.data));
+        // 'https://linke-st-server.herokuapp.com/home'
+        axios.get('http://localhost:3001/home').then(resp => setLinkedinLink(resp.data));
         if (search) {
             const code = new URLSearchParams(search).get('code');
             const state = new URLSearchParams(search).get('state');
             postToken(code, state);
+            // postCert();
             setTimeout(() => {
-                axios.get('https://linke-st-server.herokuapp.com/token').then(resp => setPost(resp.data))
+// 'https://linke-st-server.herokuapp.com/token'
+                axios.get('http://localhost:3001/token').then(resp => setPost(resp.data))
             }, 5000);
                 
         }
@@ -68,7 +71,8 @@ export function InShareModal(props) {
 
     async function postToken(code, state) {           
         try {
-          await axios.post('https://linke-st-server.herokuapp.com/token',
+            // 'https://linke-st-server.herokuapp.com/token'
+          await axios.post('http://localhost:3001/token',
            {
             code,
             state
@@ -78,13 +82,28 @@ export function InShareModal(props) {
         }
     }
 
+    async function postCert() {           
+        try {
+            // 'https://linke-st-server.herokuapp.com/token'
+          await axios.post('http://localhost:3001/postCert',
+           {
+            
+          })
+        } catch (error) {
+          console.log(error);
+        }
+    }
+
+
+
     async function postImage(img, certType) {
 
         const level = certType === 'participante' ? localStorage.getItem('pLevel') : localStorage.getItem('mLevel');
         
                 
         try {
-          await axios.post('https://linke-st-server.herokuapp.com/image',
+            // 'https://linke-st-server.herokuapp.com/image'
+          await axios.post('http://localhost:3001/image',
            {
             img,
             certType,

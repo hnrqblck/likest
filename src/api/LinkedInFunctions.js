@@ -1,15 +1,36 @@
 import api from './LinkedInApi';
 
-export const fetchUser = async () => {
+export const pathUrl = 'https://linkedin.com/oauth/v2/authorization?response_type=code&client_id=' + process.env.REACT_APP_CLIENT_ID + '&redirect_uri=' + encodeURIComponent(process.env.REACT_APP_REDIRECT_URI) + '&state=' + Math.random() + '&scope=' + encodeURIComponent('r_liteprofile r_emailaddress w_member_social');
+
+export const fetchUser = async (token) => {
     const { data } = await api("/me", {
       method: "GET",
-      mode: 'no-cors',
+      
       headers: {
-        Authorization: `Bearer AQUzj1YWVrwdOmYljQ-Gs1ADSZ-0rcKeW8v9yuQIsDeVsGsp3ETCDbvWek1z6g3lQ97VNTbjOmVzerMMbgbmHak1IlmqPZN2zaLhtVSqCOg4-TpVvRbbwhGKTFVrbrd6qM_5xSeDB3SxPdWpXKoxJiI1ger2KkmE-BkZYWYEKO0cEBrqFszA3LutiKSpytd4jy9SEGaERItyXFuza_5GJ3zS56VywmETatbxp8Q74PNhC0mXqMFNGw7Sb-cvUYDTJOdTA9qRQg3tWRjHs4IuQktNm3m9RVTRPtDygy188Ldyi_zqoxqiekKKngWPsHqrh064SLW_zXnDRvJMAhIPrgg4IQBXoA`,
+        Authorization: `Bearer ${token}`,
         'Access-Control-Allow-Origin': 'https://api.linkedin.com/v2/me',
+        'cache-control': 'no-cache',
+        'X-Restli-Protocol-Version': '2.0.0',
+        "Content-Type": "x-www-form-urlencoded",
         'Access-Control-Allow-Methods': 'GET, POST, PATCH, PUT, DELETE, OPTIONS',
         'Access-Control-Allow-Headers': 'Origin, Content-Type, X-Auth-Token'
       },
     })
     return data;
   };
+
+  export const _request = (method, hostname, path, headers, body) => {
+    
+      const reqOpts = {
+        method,
+        hostname,
+        path,
+        headers,
+        "rejectUnauthorized": false
+      };
+      let resBody = "";
+      return fetch(reqOpts, res => {
+        console.log(res)
+      })
+      
+  }
