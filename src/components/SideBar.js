@@ -13,6 +13,7 @@ import SideBarStats from "./SideBarStats";
 import SideBarLoader from "./SideBarLoader";
 import { TabIndexContext } from "./Context/TabIndexContext";
 import { useHistory } from "react-router-dom";
+import { i18n } from "../translate/i18n";
 
 const SideBar = (props) => {
     const full_name = UserSession.getName();
@@ -60,7 +61,7 @@ const SideBar = (props) => {
                     mt={4}
                     onClick={handleClickSair}
                 >
-                    Sair
+                    {i18n.t('sideBar.button')}
                 </Button>
             </Flex>
   )

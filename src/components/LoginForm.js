@@ -22,6 +22,7 @@ import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons';
 import { strateegiaLogin } from '../api/StrateegiaLogin';
 import UserSession from './UserSession';
 import { ErrorMessage } from './ErrorMessage';
+import { i18n } from '../translate/i18n';
 
 export class LoginForm extends React.Component {
     constructor() {
@@ -138,14 +139,14 @@ export class LoginForm extends React.Component {
                                 </FormControl>
                                 <Flex direction="row">
                                     <Text fontSize="sm" color="GrayText" textAlign="left" marginTop="2vw">
-                                        Entre com seu login e senha do <br /> <Link> strateegia.digital </Link> para começar.
+                                        {i18n.t('login.message1')} <br/> {i18n.t('login.message2')}
                                     </Text>
                                     <Box flexGrow="1"/>
                                     <Button width="auto" mt={4} type="submit" onClick={this.handleSubmit} size="md" colorScheme="blue" marginTop="2vw">
                                         {this.state.isLoading ? (
                                             <CircularProgress isIndeterminate size="24px" color="blue" />
                                         ) : (
-                                            'Entrar'
+                                            i18n.t('login.button')
                                         )}
                                     </Button>
                                 </Flex>

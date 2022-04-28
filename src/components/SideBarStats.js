@@ -14,6 +14,7 @@ import {
 } from '@chakra-ui/react';
 
 import { InAddModal } from "./InAddModal";
+import { i18n } from "../translate/i18n";
 
 class SideBarStats extends React.Component {
 
@@ -21,7 +22,7 @@ class SideBarStats extends React.Component {
         return (
             < Flex textAlign="left" flexDirection="column" alignItems="left" width="13em" paddingTop="1em">
                 <Text fontSize="sm" marginBottom="1em">
-                    Geramos o certificado baseado nas suas estatísticas de uso da plataforma strateegia.digital.
+                    {i18n.t('sideBarCert.title')}
                 </Text>
                 <br />
 
@@ -48,7 +49,7 @@ class SideBarStats extends React.Component {
                         )
                     }
                         <FormLabel htmlFor="modo-habilitador" mb="0" marginLeft="0.5em" fontSize="sm">
-                            Certificado Habilitador
+                            {i18n.t('sideBarCert.enablerCert')}
                         </FormLabel>
                     </FormControl>
                 </>}
@@ -59,7 +60,7 @@ class SideBarStats extends React.Component {
                     <Divider />
 
                     <Heading as="h6" size="xs" paddingY="1em">
-                        Compartilhar no LinkedIn
+                        {i18n.t('sideBarCert.linkedinHeading')}
                     </Heading>
 
                     <InAddModal

@@ -15,6 +15,7 @@ import { TiSocialLinkedin } from 'react-icons/ti';
 import { openSignInWindow } from "./Popup";
 import { useLocation } from "react-router-dom";
 import * as htmlToImage from 'html-to-image';
+import { i18n } from "../translate/i18n";
 const axios = require('axios');
 
 
@@ -127,7 +128,7 @@ export function InShareModal(props) {
                 width="100%" justifyContent="flex-start"
                 leftIcon={<TiSocialLinkedin />}
             >
-                Publicar no feed
+                {i18n.t('inShareModal.button1')}
             </Button>
 
             <Modal isOpen={isOpen} onClose={onClose} >
@@ -137,21 +138,19 @@ export function InShareModal(props) {
                     {/* <ModalCloseButton /> */}
                     <ModalBody>
                         <Text >
-                            Uma janela do seu navegador será aberta
-                            para você fazer login no LinkedIn e autorizar
-                            este app a fazer postagens em seu nome no LinkedIn.
+                            {i18n.t('inShareModal.message')}
                         </Text>
                     </ModalBody>
 
                     <ModalFooter>
                         <Button colorScheme="blue" mr={3} onClick={onClose}>
-                            Voltar
+                            {i18n.t('inShareModal.button2')}
                         </Button>
                         <a href={linkedinLink}>
                         <Button variant="ghost" colorScheme="blue" onClick={() => {
                             share();
                         }}>
-                            Publicar no feed</Button>
+                            {i18n.t('inShareModal.button1')}</Button>
                             </a>
                     </ModalFooter>
                 </ModalContent>

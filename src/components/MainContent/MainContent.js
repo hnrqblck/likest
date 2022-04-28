@@ -9,6 +9,7 @@ import {
     Box
 } from '@chakra-ui/react';
 import ContentTabs from "../ContentTabs";
+import { i18n } from '../../translate/i18n';
 
 const MainContent = ({cert_type}) => {
     const token = UserSession.getToken();
@@ -49,7 +50,7 @@ const MainContent = ({cert_type}) => {
     
     function handleFetchState(value, time) {
         setTimeout(() => {
-            setFetchingState([value, 'carregando dados']);
+            setFetchingState([value, i18n.t('mainContent.data')]);
         }, time);
     };
 

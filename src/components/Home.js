@@ -7,6 +7,8 @@ import UserSession from './UserSession';
 import SideBar from "./SideBar";
 import MainContent from "./MainContent/MainContent";
 import { useHistory } from "react-router-dom";
+import LanguageSelector from "../hooks/LanguageSelector";
+import '../styles/languageSelector.css';
 
 const Home = (props) => {
     const history = useHistory();
@@ -47,36 +49,42 @@ const Home = (props) => {
                 history.push("/login")
 
             ) : (
-                <Flex
+                <>
+                <div className='lsHome'>
+                    <LanguageSelector/>
+                </div>
+                    <Flex
                     width="full"
                     height="fit-content"
                     alignContent="center"
                     // alignItems="top"
                     justifyContent="center"
                     paddingTop="10vh"
-                >
-                    {/* <SideBar tabIdenx={props.tabIdenx}/> <MainContent/> */}
-                    <SideBar
-                        cert_type={certType}
-                        fetching_st_data={fetchingStData}
-                        tabIndex={tabIndex}
-                        has_mentorship={true}
-                        cert_level={certLevel}
-                        issue_date={issueDate}
-                        handleCertTypeUpdate={handleCertTypeUpdate}
-                        
-                    />
-                    {/* <Text>{state.tabIndex}</Text> */}
-                    <MainContent
-                        cert_type={certType}
-                        has_mentorship={hasMentorship}
-                        handleTabIndexUpdate={handleTabIndexUpdate}
-                        handleMentorshipUpdate={handleMentorshipUpdate}
-                        handleCertLevelUpdate={handleCertLevelUpdate}
-                        // handleFetchingStDataUpdate={handleFetchingStDataUpdate}
-                    />
-                    {/* <MainContenttt /> */}
-                </Flex>
+                    >
+                        <br/>
+                        {/* <SideBar tabIdenx={props.tabIdenx}/> <MainContent/> */}
+                        <SideBar
+                            cert_type={certType}
+                            fetching_st_data={fetchingStData}
+                            tabIndex={tabIndex}
+                            has_mentorship={true}
+                            cert_level={certLevel}
+                            issue_date={issueDate}
+                            handleCertTypeUpdate={handleCertTypeUpdate}
+                            
+                        />
+                        {/* <Text>{state.tabIndex}</Text> */}
+                        <MainContent
+                            cert_type={certType}
+                            has_mentorship={hasMentorship}
+                            handleTabIndexUpdate={handleTabIndexUpdate}
+                            handleMentorshipUpdate={handleMentorshipUpdate}
+                            handleCertLevelUpdate={handleCertLevelUpdate}
+                            // handleFetchingStDataUpdate={handleFetchingStDataUpdate}
+                        />
+                        {/* <MainContenttt /> */}
+                    </Flex>
+                </>
             )
             }
         </>

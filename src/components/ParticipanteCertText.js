@@ -6,6 +6,7 @@ import {
 } from '@chakra-ui/react';
 
 import UserSession from './UserSession';
+import { i18n } from "../translate/i18n";
 
 class ParticipanteCertText extends React.Component {
 
@@ -35,7 +36,7 @@ class ParticipanteCertText extends React.Component {
                                 color="black"
                                 textAlign="right"
                             >
-                                Certificamos que <Text as="span" color="#7B1AE2" textAlign="right" textTransform="uppercase" fontWeight="bold"> {this.full_name} </Text> adquiriu
+                                {i18n.t('cert.cert1')} <Text as="span" color="#7B1AE2" textAlign="right" textTransform="uppercase" fontWeight="bold"> {this.full_name} </Text> {i18n.t('cert.cert2')}
                             </Text>
 
                             <Text
@@ -44,7 +45,7 @@ class ParticipanteCertText extends React.Component {
                                 color="black"
                                 textAlign="right"
                             >
-                                habilidades em <Text as="span" color="black" fontWeight="bold"> JORNADAS DE TRANSFORMAÇÃO DIGITAL </Text>
+                                {i18n.t('cert.skills1')} <Text as="span" color="black" fontWeight="bold"> {i18n.t('cert.skills2')} </Text>
                             </Text>
 
                             <Text
@@ -53,7 +54,7 @@ class ParticipanteCertText extends React.Component {
                                 color="black"
                                 textAlign="right"
                             >
-                                na plataforma <Text as="span" color="#E4345B" fontWeight="bold"> strateegia.digital </Text>
+                                {i18n.t('cert.platform1')} <Text as="span" color="#E4345B" fontWeight="bold"> {i18n.t('cert.platform2')} </Text> {i18n.t('cert.platform3')}
                             </Text>
                         </>
                     ) : (
@@ -64,7 +65,7 @@ class ParticipanteCertText extends React.Component {
                                 color="white"
                                 textAlign="right"
                             >
-                                Certificamos que <Text as="span" color="#F9B411" textAlign="right" textTransform="uppercase" fontWeight="bold"> {this.full_name} </Text> adquiriu
+                                {i18n.t('cert.cert1')} <Text as="span" color="#F9B411" textAlign="right" textTransform="uppercase" fontWeight="bold"> {this.full_name} </Text> {i18n.t('cert.cert2')}
                             </Text>
 
                             <Text
@@ -73,7 +74,7 @@ class ParticipanteCertText extends React.Component {
                                 color="white"
                                 textAlign="right"
                             >
-                                habilidades em <Text as="span" color="white" fontWeight="bold"> JORNADAS DE TRANSFORMAÇÃO DIGITAL </Text>
+                                {i18n.t('cert.skills1')} <Text as="span" color="white" fontWeight="bold"> {i18n.t('cert.skills2')} </Text>
                             </Text>
 
                             <Text
@@ -82,7 +83,7 @@ class ParticipanteCertText extends React.Component {
                                 color="white"
                                 textAlign="right"
                             >
-                                na plataforma <Text as="span" color="#36C8B5" fontWeight="bold"> strateegia.digital </Text>
+                                {i18n.t('cert.platform1')} <Text as="span" color="#36C8B5" fontWeight="bold"> {i18n.t('cert.platform2')} </Text> {i18n.t('cert.platform3')}
                             </Text>
                         </>
                     )}
@@ -97,7 +98,7 @@ class ParticipanteCertText extends React.Component {
                     fontSize="0.9vw"
                 >
                     <Text>
-                        Data de emissão:
+                    {i18n.t('cert.date')}
                     </Text>
                     <Text>
                         {this.props.issue_date.day}/{this.props.issue_date.month}/{this.props.issue_date.year}

@@ -18,14 +18,10 @@ import { IoMdImage } from 'react-icons/io';
 import { AiFillFileImage } from 'react-icons/ai';
 import { InAddModal } from "./InAddModal";
 import { InShareModal } from "./InShareModal";
+import { i18n } from "../translate/i18n";
 import axios from 'axios';
 
 const SideBarCertificate = (props) => {
-
-
-    
-
-    
 
     function saveCertPng() {
         // const component = document.getElementById('cert');
@@ -63,7 +59,7 @@ const SideBarCertificate = (props) => {
     return (
         < Flex textAlign="left" flexDirection="column" alignItems="left" width="13em" paddingTop="1em">
             <Text fontSize="sm" marginBottom="1em">
-                Geramos o certificado baseado nas suas estatísticas de uso da plataforma strateegia.digital.
+                {i18n.t('sideBarCert.title')}
             </Text>
             <br />
 
@@ -88,7 +84,7 @@ const SideBarCertificate = (props) => {
                     )
                 }
                     <FormLabel htmlFor="modo-habilitador" mb="0" marginLeft="0.5em" fontSize="sm">
-                        Certificado Habilitador
+                    {i18n.t('sideBarCert.enablerCert')}
                     </FormLabel>
                 </FormControl>
                 {/* {backE} */}
@@ -100,7 +96,7 @@ const SideBarCertificate = (props) => {
                 <Divider />
 
                 <Heading as="h6" size="xs" paddingY="1em">
-                    Compartilhar no LinkedIn
+                    {i18n.t('sideBarCert.linkedinHeading')}
                 </Heading>
 
                 <InAddModal
@@ -121,7 +117,7 @@ const SideBarCertificate = (props) => {
                 <Divider paddingTop="1em" />
 
                 <Heading as="h6" size="xs" paddingY="1em">
-                    Baixar certificado
+                    {i18n.t('sideBarCert.downloadHeading')}
                 </Heading>
 
                 <Button
@@ -134,7 +130,7 @@ const SideBarCertificate = (props) => {
                     justifyContent="flex-start"
                     leftIcon={<IoMdImage />}
                 >
-                    Arquivo PNG
+                    {i18n.t('sideBarCert.png')}
                 </Button>
 
                 <Button
@@ -148,7 +144,7 @@ const SideBarCertificate = (props) => {
                     justifyContent="flex-start"
                     leftIcon={<AiFillFileImage />}
                 >
-                    Arquivo PDF
+                    {i18n.t('sideBarCert.pdf')}
                 </Button>
             </VStack>
         </Flex>

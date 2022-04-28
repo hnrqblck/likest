@@ -13,6 +13,7 @@ import Loader from "./Loader";
 // import LinkedIn from "./LinkedIn";
 import Stats from "./Stats";
 import { TabIndexContext } from "./Context/TabIndexContext";
+import { i18n } from "../translate/i18n";
 
 
 const ContentTabs = (props) => {
@@ -27,8 +28,8 @@ const ContentTabs = (props) => {
                         {props.fetching_st_data ?
                             (<>
                                 <TabList>
-                                    <Tab isDisabled>Certificado</Tab>
-                                    <Tab isDisabled>Estatísticas</Tab>
+                                    <Tab isDisabled>{i18n.t('contentTabs.cert')}</Tab>
+                                    <Tab isDisabled>{i18n.t('contentTabs.stats')}</Tab>
                                 </TabList>
                                 <TabPanels>
                                     <TabPanel>
@@ -44,9 +45,9 @@ const ContentTabs = (props) => {
                                 <>
                                     <TabList>
                                         <Tab onClick={() => tabIndex.handleTabIndex(0)}>
-                                            Certificado
+                                        {i18n.t('contentTabs.cert')}
                                         </Tab>
-                                        <Tab onClick={() => tabIndex.handleTabIndex(1)}>Estatísticas</Tab>
+                                        <Tab onClick={() => tabIndex.handleTabIndex(1)}>{i18n.t('contentTabs.stats')}</Tab>
                                     </TabList>
                                     <TabPanels paddingTop="1vh">
                                         <TabPanel>

@@ -17,6 +17,7 @@ import {
 } from "@chakra-ui/react"
 
 import UserSession from '../components/UserSession';
+import { i18n } from "../translate/i18n";
 
 class StatsTable extends React.Component {
 
@@ -66,56 +67,56 @@ class StatsTable extends React.Component {
             <ChakraProvider>
                 <Box>
                     <Heading size="lg">{this.full_name}</Heading>
-                    <Text textAlign="left" marginTop="1em" marginBottom="1em">Estatísticas do dia {this.props.issue_date.day}/{this.props.issue_date.month}/{this.props.issue_date.year}</Text>
+                    <Text textAlign="left" marginTop="1em" marginBottom="1em">{i18n.t('statsTable.heading')} {this.props.issue_date.day}/{this.props.issue_date.month}/{this.props.issue_date.year}</Text>
                     <Box overflow="auto" maxHeight="45vh" paddingTop="2vh">
                         <Table variant="striped" size="sm" width="52vw" colorScheme="blue">
                             <Thead>
                                 <Tr>
-                                    <Th fontSize="x-small">Atividade</Th>
-                                    <Th fontSize="x-small" textAlign="right" >Quantidade atual</Th>
-                                    <Th fontSize="x-small" textAlign="right">% Completo</Th>
-                                    <Th fontSize="x-small" textAlign="right">Próximo nível: {this.state.next_level_data.level}</Th>
+                                    <Th fontSize="x-small">{i18n.t('statsTable.tableHd1')}</Th>
+                                    <Th fontSize="x-small" textAlign="right" >{i18n.t('statsTable.tableHd2')}</Th>
+                                    <Th fontSize="x-small" textAlign="right">{i18n.t('statsTable.tableHd3')}</Th>
+                                    <Th fontSize="x-small" textAlign="right">{i18n.t('statsTable.tableHd4')} {this.state.next_level_data.level}</Th>
                                 </Tr>
                             </Thead>
                             <Tbody>
                                 <Tr>
-                                    <Td>Jornadas</Td>
+                                    <Td>{i18n.t('statsTable.tableDt1')}</Td>
                                     <Td isNumeric fontWeight="bold">{this.props.number_of_projects}</Td>
                                     <Td isNumeric>{Math.round((this.props.number_of_projects / this.state.next_level_data.number_of_projects) * 100)}%</Td>
                                     <Td isNumeric fontWeight="bold">{this.state.next_level_data.number_of_projects}</Td>
                                 </Tr>
                                 <Tr>
-                                    <Td>Mapas</Td>
+                                    <Td>{i18n.t('statsTable.tableDt2')}</Td>
                                     <Td isNumeric fontWeight="bold">{this.props.number_of_missions}</Td>
                                     <Td isNumeric>{Math.round((this.props.number_of_missions / this.state.next_level_data.number_of_missions) * 100)}%</Td>
                                     <Td isNumeric fontWeight="bold">{this.state.next_level_data.number_of_missions}</Td>
                                 </Tr>
                                 <Tr>
-                                    <Td>Pontos de divergência</Td>
+                                    <Td>{i18n.t('statsTable.tableDt3')}</Td>
                                     <Td isNumeric fontWeight="bold">{this.props.number_of_divergence_points}</Td>
                                     <Td isNumeric>{Math.round((this.props.number_of_divergence_points / this.state.next_level_data.number_of_divergence_points) * 100)}%</Td>
                                     <Td isNumeric fontWeight="bold">{this.state.next_level_data.number_of_divergence_points}</Td>
                                 </Tr>
                                 <Tr>
-                                    <Td>Pontos de convergência</Td>
+                                    <Td>{i18n.t('statsTable.tableDt4')}</Td>
                                     <Td isNumeric fontWeight="bold">{this.props.number_of_convergence_points}</Td>
                                     <Td isNumeric>{Math.round((this.props.number_of_convergence_points / this.state.next_level_data.number_of_convergence_points) * 100)}%</Td>
                                     <Td isNumeric fontWeight="bold">{this.state.next_level_data.number_of_convergence_points}</Td>
                                 </Tr>
                                 <Tr>
-                                    <Td>Pontos de conversação</Td>
+                                    <Td>{i18n.t('statsTable.tableDt5')}</Td>
                                     <Td isNumeric fontWeight="bold">{this.props.number_of_conversation_points}</Td>
                                     <Td isNumeric>{Math.round((this.props.number_of_conversation_points / this.state.next_level_data.number_of_conversation_points) * 100)}%</Td>
                                     <Td isNumeric fontWeight="bold">{this.state.next_level_data.number_of_conversation_points}</Td>
                                 </Tr>
                                 <Tr>
-                                    <Td>Respostas para questões essenciais</Td>
+                                    <Td>{i18n.t('statsTable.tableDt6')}</Td>
                                     <Td isNumeric fontWeight="bold">{this.props.number_of_replies_from_user}</Td>
                                     <Td isNumeric>{Math.round((this.props.number_of_replies_from_user / this.state.next_level_data.number_of_replies_from_user) * 100)}%</Td>
                                     <Td isNumeric fontWeight="bold">{this.state.next_level_data.number_of_replies_from_user}</Td>
                                 </Tr>
                                 <Tr>
-                                    <Td>Comentários</Td>
+                                    <Td>{i18n.t('statsTable.tableDt7')}</Td>
                                     <Td isNumeric fontWeight="bold">{this.props.number_of_comment_replies_from_user}</Td>
                                     <Td isNumeric>{Math.round((this.props.number_of_comment_replies_from_user / this.state.next_level_data.number_of_comment_replies_from_user) * 100)}%</Td>
                                     <Td isNumeric fontWeight="bold">{this.state.next_level_data.number_of_comment_replies_from_user}</Td>
@@ -123,7 +124,7 @@ class StatsTable extends React.Component {
 
                                 {this.props.cert_type === 'mentor' ? (
                                     <Tr>
-                                        <Td>Habilitações</Td>
+                                        <Td>{i18n.t('statsTable.tableDt8')}</Td>
                                         <Td isNumeric fontWeight="bold">{this.props.number_of_mentorships}</Td>
                                         <Td isNumeric>{Math.round((this.props.number_of_mentorships / this.state.next_level_data.number_of_mentorships) * 100)}%</Td>
                                         <Td isNumeric fontWeight="bold">{this.state.next_level_data.number_of_mentorships}</Td>
@@ -133,7 +134,7 @@ class StatsTable extends React.Component {
                                 )}
 
                             </Tbody>
-                            <TableCaption textAlign="right">Você precisa de pelo menos 100% completo em todos os critétios para atingir o próximo nível. Os níveis são: 1. Iniciante; 2. Intermediário; 3. Avançado.</TableCaption>
+                            <TableCaption textAlign="right">{i18n.t('statsTable.caption')}</TableCaption>
                         </Table>
                     </Box>
                 </Box>

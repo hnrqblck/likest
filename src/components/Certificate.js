@@ -9,6 +9,7 @@ import UserSession from './UserSession';
 
 import MentorCertText from "./MentorCertText";
 import ParticipanteCertText from "./ParticipanteCertText";
+import { i18n } from '../translate/i18n';
 
 class Certificate extends React.Component {
 
@@ -24,15 +25,15 @@ class Certificate extends React.Component {
     render() {
         return (
 
-
+// i18n.t('certificate.participant')
             <AspectRatio
                 ratio={16 / 9.76}
                 width="62vw"
             >
                 <Box
                     backgroundImage={this.props.cert_type === 'participante' ?
-                        "certs/" + this.props.cert_type + "_" + this.props.cert_level_participante + ".png"
-                        : "certs/" + this.props.cert_type + "_" + this.props.cert_level_mentor + ".png"}
+                        "certs/" + i18n.t('certificate.participant') + "_" + this.props.cert_level_participante + ".png"
+                        : "certs/" + i18n.t('certificate.enabler') + "_" + this.props.cert_level_mentor + ".png"}
                     backgroundSize="cover"
                     position="relative"
                     id="cert"

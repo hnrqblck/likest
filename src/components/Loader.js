@@ -7,6 +7,7 @@ import {
     Progress,
     AspectRatio
 } from '@chakra-ui/react';
+import { i18n } from "../translate/i18n";
 
 class Loader extends React.Component {
 
@@ -30,7 +31,7 @@ class Loader extends React.Component {
                                 <Flex flexDirection="column" >
                                     <Flex flexDirection="column">
                                         <Text fontSize="md">
-                                            Isso pode levar alguns segundos...
+                                            {i18n.t('loader.message')}
                                         </Text>
                                     </Flex>
                                     <Box

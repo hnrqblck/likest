@@ -14,6 +14,7 @@ import {
 } from "@chakra-ui/react"
 
 import { TiSocialLinkedin } from 'react-icons/ti';
+import { i18n } from "../translate/i18n";
 
 function handleClickAdd(data) {
 
@@ -75,7 +76,7 @@ export function InAddModal(props) {
                 width="12.3em" justifyContent="flex-start"
                 leftIcon={<TiSocialLinkedin />}
             >
-                Adicionar ao perfil
+                {i18n.t('inAddModal.button1')}
             </Button>
 
             <Modal isOpen={isOpen} onClose={onClose} size="xl">
@@ -85,16 +86,14 @@ export function InAddModal(props) {
                     {/* <ModalCloseButton /> */}
                     <ModalBody>
                         <Text >
-                            Uma nova aba no seu navegador será aberta
-                            com uma página do LinkedIn para você adicionar
-                            o certificado ao seu perfil profissional.
+                            {i18n.t('inAddModal.message')}
                         </Text>
                         <Image marginY="2em" src="ilustra_add.jpeg"/>
                     </ModalBody>
 
                     <ModalFooter>
                         <Button colorScheme="blue" mr={3} onClick={onClose}>
-                            Voltar
+                            {i18n.t('inAddModal.button2')}
                         </Button>
                         <Button variant="ghost" colorScheme="blue" onClick={() => {
                             handleClickAdd(
@@ -106,7 +105,7 @@ export function InAddModal(props) {
                                 }
                             )
                         }}>
-                            Adicionar ao perfil</Button>
+                            {i18n.t('inAddModal.button1')}</Button>
                     </ModalFooter>
                 </ModalContent>
             </Modal>

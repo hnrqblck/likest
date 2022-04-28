@@ -6,6 +6,7 @@ import {
 } from '@chakra-ui/react';
 
 import UserSession from './UserSession';
+import { i18n } from "../translate/i18n";
 
 class MentorCertText extends React.Component {
 
@@ -31,7 +32,7 @@ class MentorCertText extends React.Component {
                                 color="black"
                                 textAlign="right"
                             >
-                                Certificamos que <Text as="span" color="#2D4FEE" textAlign="right" textTransform="uppercase" fontWeight="extrabold"> {this.full_name} </Text>
+                                {i18n.t('cert.cert1')} <Text as="span" color="#2D4FEE" textAlign="right" textTransform="uppercase" fontWeight="extrabold"> {this.full_name} </Text>
                             </Text>
 
                             <Text
@@ -40,7 +41,7 @@ class MentorCertText extends React.Component {
                                 color="black"
                                 textAlign="right"
                             >
-                                habilita <Text as="span" color="black" fontWeight="extrabold"> JORNADAS DE TRANSFORMAÇÃO DIGITAL </Text>
+                                {i18n.t('cert.skillsHab')} <Text as="span" color="black" fontWeight="extrabold"> {i18n.t('cert.skills2')} </Text>
                             </Text>
 
                             <Text
@@ -49,7 +50,7 @@ class MentorCertText extends React.Component {
                                 color="black"
                                 textAlign="right"
                             >
-                                na plataforma <Text as="span" color="#E4345B" fontWeight="bold"> strateegia.digital </Text>
+                                {i18n.t('cert.platform1')} <Text as="span" color="#E4345B" fontWeight="bold"> {i18n.t('cert.platform2')} </Text>
                             </Text>
                         </>
                     ) : (
@@ -60,7 +61,7 @@ class MentorCertText extends React.Component {
                                 color="white"
                                 textAlign="right"
                             >
-                                Certificamos que <Text as="span" color="#36C8B5" textAlign="right" textTransform="uppercase" fontWeight="bold"> {this.full_name} </Text>
+                                {i18n.t('cert.cert1')} <Text as="span" color="#36C8B5" textAlign="right" textTransform="uppercase" fontWeight="bold"> {this.full_name} </Text>
                             </Text>
 
                             <Text
@@ -69,7 +70,7 @@ class MentorCertText extends React.Component {
                                 color="white"
                                 textAlign="right"
                             >
-                                habilita <Text as="span" color="white" fontWeight="bold"> JORNADAS DE TRANSFORMAÇÃO DIGITAL </Text>
+                                {i18n.t('cert.skillsHab')} <Text as="span" color="white" fontWeight="bold"> {i18n.t('cert.skills2')} </Text>
                             </Text>
 
                             <Text
@@ -78,7 +79,7 @@ class MentorCertText extends React.Component {
                                 color="white"
                                 textAlign="right"
                             >
-                                na plataforma <Text as="span" color="#F9B411" fontWeight="bold"> strateegia.digital </Text>
+                                {i18n.t('cert.platform1')} <Text as="span" color="#F9B411" fontWeight="bold"> {i18n.t('cert.platform2')} </Text>
                             </Text>
                         </>
                     )}
@@ -94,7 +95,7 @@ class MentorCertText extends React.Component {
                     textAlign="right"
                 >
                     <Text>
-                        Data de emissão: {this.props.issue_date.day}/{this.props.issue_date.month}/{this.props.issue_date.year}
+                    {i18n.t('cert.date')} {this.props.issue_date.day}/{this.props.issue_date.month}/{this.props.issue_date.year}
                     </Text>
                     
                 </Box>

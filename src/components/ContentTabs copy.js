@@ -15,6 +15,7 @@ import Certificate from "./Certificate";
 // import LinkedIn from "./LinkedIn";
 
 import Stats from "./Stats";
+import { i18n } from "../translate/i18n";
 
 class ContentTabs extends React.Component {
     constructor(props) {
@@ -41,8 +42,8 @@ class ContentTabs extends React.Component {
                 <Flex width="65vw" height="39.6vw">
                     <Tabs index={this.state.tabIndex} onChange={this.handleTabsChange} isFitted size="sm" width="65vw" colorScheme="blue">
                         <TabList>
-                            <Tab>Certificado</Tab>
-                            <Tab>Estatísticas</Tab>
+                            <Tab>{i18n.t('contentTabs.cert')}</Tab>
+                            <Tab>{i18n.t('contentTabs.stats')}</Tab>
                         </TabList>
                         <TabPanels>
 

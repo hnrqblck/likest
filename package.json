@@ -6,7 +6,6 @@
   },
   "version": "0.1.0",
   "private": true,
-  
   "proxy": "http://localhost:3001",
   "dependencies": {
     "@chakra-ui/icons": "^1.0.15",
@@ -20,6 +19,8 @@
     "file-saver": "^2.0.5",
     "framer-motion": "^4.1.17",
     "html-to-image": "^1.7.0",
+    "i18next": "^21.6.16",
+    "i18next-browser-languagedetector": "^6.1.4",
     "jspdf": "^2.3.1",
     "node-linkedin": "^0.5.6",
     "react": "^17.0.2",

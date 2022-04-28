@@ -9,15 +9,18 @@ import {
 } from '@chakra-ui/react';
 
 import { LoginForm } from './LoginForm'
-// import { LoginInfo } from './LoginInfo'
+import LanguageSelector from "../hooks/LanguageSelector";
+import { i18n } from '../translate/i18n';
+import '../styles/languageSelector.css';
 
 export function Login() {
 
     return (
         <ChakraProvider>
-            <Flex width="full" height="100vh" alignContent="center" alignItems="center" justifyContent="center" flexDirection="column" backgroundImage="bg2.png" backgroundSize="cover">
+            <Flex className="login" width="full" height="100vh" alignContent="center" alignItems="center" justifyContent="center" flexDirection="column" backgroundImage="bg2.png" backgroundSize="cover">
+                <LanguageSelector classN={'lsLogin'}/>
                 <Text fontSize="lg" textAlign="center" fontWeight="semibold" paddingBottom="1em">
-                    Gere um certificado de experiência  na plataforma <Link> strateegia.digital </Link> <br /> e adicione ao seu perfil do LinkedIn!
+                    {i18n.t('login.title1')} <br /> {i18n.t('login.title2')}
                 </Text>
 
                 <Flex width="fit-content" alignItems="center" flexDirection="column" boxShadow="md" margin="2em" padding="2em" backgroundColor="white">
