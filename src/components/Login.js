@@ -18,7 +18,7 @@ export function Login() {
     return (
         <ChakraProvider>
             <Flex className="login" width="full" height="100vh" alignContent="center" alignItems="center" justifyContent="center" flexDirection="column" backgroundImage="bg2.png" backgroundSize="cover">
-                <LanguageSelector classN={'lsLogin'}/>
+                <LanguageSelector/>
                 <Text fontSize="lg" textAlign="center" fontWeight="semibold" paddingBottom="1em">
                     {i18n.t('login.title1')} <br /> {i18n.t('login.title2')}
                 </Text>
